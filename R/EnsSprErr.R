@@ -1,6 +1,6 @@
-# EnsSprErr.R compute spread to error ratio
+# EnsSprErr.R Spread to Error Ratio
 #
-#     Copyright (C) 2015 MeteoSwiss
+#     Copyright (C) 2016 MeteoSwiss
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -16,23 +16,21 @@
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-#' Compute spread-error ratio
+#' Spread to Error Ratio
 #' 
-#' Modular function that computes the spread to error ratio (SPR) for probabilistic
-#' forecasts - not unlike the functions in SpecsVerification. SPR > 1 indicates 
-#' overdispersion (underconfidence), whereas SPR < indicates overconfidence in the 
-#' forecasts.
+#' Computes the spread to error ratio (SPR) for probabilistic forecasts - not
+#' unlike the functions in SpecsVerification. SPR > 1 indicates overdispersion
+#' (underconfidence), whereas SPR < indicates overconfidence in the forecasts.
 #' 
 #' @param ens n x k matrix of n forecasts for k ensemble members
 #' @param obs vector with n verifying observations
+#'   
+#' @details Here we define the spread-error rate as the square root of the ratio
+#' of mean ensemble variance to the mean squared error of the ensemble mean with
+#' the verifying observations
 #' 
-#' @details
-#' Here we define the spread-error rate as the square root of the ratio of mean
-#' ensemble variance to the mean squared error of the ensemble mean with the
-#' verifying observations
-#'
 #' @seealso \code{\link{veriApply}}, \code{\link{FairSprErr}}
-#' 
+#'   
 #' @examples
 #' tm <- toymodel()
 #' EnsSprErr(tm$fcst, tm$obs)

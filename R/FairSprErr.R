@@ -1,6 +1,6 @@
-# FairSprErr.R compute spread to error ratio
+# FairSprErr.R Spread to Error Ratio
 #
-#     Copyright (C) 2015 MeteoSwiss
+#     Copyright (C) 2016 MeteoSwiss
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -16,12 +16,12 @@
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-#' Fair spread-error ratio
+#' Fair Spread to Error Ratio
 #' 
-#' Modular function that computes the spread to error ratio (\code{SPR}) for 
-#' probabilistic forecasts - not unlike the functions in SpecsVerification. 
-#' \code{SPR > 1} indicates overdispersion (underconfidence), whereas \code{SPR 
-#' < 1} indicates overconfidence in the forecasts.
+#' Compute the spread to error ratio (\code{SPR}) for probabilistic forecasts -
+#' not unlike the functions in SpecsVerification. \code{SPR > 1} indicates
+#' overdispersion (underconfidence), whereas \code{SPR < 1} indicates
+#' overconfidence in the forecasts.
 #' 
 #' @param ens n x k matrix of n forecasts for k ensemble members
 #' @param obs vector with n verifying observations
@@ -36,7 +36,7 @@
 #'   Practitioner's Guide in Atmospheric Science, Second Edition, 141-166.
 #'   
 #' @seealso \code{\link{veriApply}}, \code{\link{FairSprErr}}
-#' 
+#'   
 #' @examples
 #' tm <- toymodel()
 #' FairSprErr(tm$fcst, tm$obs)

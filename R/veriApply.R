@@ -1,6 +1,6 @@
-# veriApply.R apply verification metrics to large datasets
+# veriApply.R Apply Verification Metrics to Large Datasets
 #
-#     Copyright (C) 2015 MeteoSwiss
+#     Copyright (C) 2016 MeteoSwiss
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -16,10 +16,10 @@
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-#' Apply verification metrics to large datasets
+#' Apply Verification Metrics to Large Datasets
 #' 
 #' This wrapper applies verification metrics to arrays of forecast ensembles and
-#' verifying observations. Various formats array-based formats are supported.
+#' verifying observations. Various array-based data formats are supported.
 #' Additionally, continuous forecasts (and observations) are transformed to
 #' category forecasts using user-defined absolute thresholds or percentiles of
 #' the long-term climatology (see details).
@@ -42,6 +42,18 @@
 #' of CPUs is used when \code{is.null(ncpus)} (the default).
 #' @param ... additional arguments passed to \code{verifun}
 #'   
+#' @section List of functions to be called:
+#'   The selection of verification functions supplied with this package and 
+#'   as part of \code{SpecsVerification} can be enquired using
+#'   \code{ls(pos='package:easyVerification')} and 
+#'   \code{ls(pos='package:SpecsVerification')} respectively. Please note, however, 
+#'   that only some of the functions provided as part of \code{SpecsVerification}
+#'   can be used with \code{\link{veriApply}}. Functions that can be used include
+#'   for example the (fair) ranked probability score \code{\link[SpecsVerification]{EnsRps}},
+#'   \code{\link[SpecsVerification]{FairRps}}, and its skill score \code{\link[SpecsVerification]{EnsRpss}}, 
+#'   \code{\link[SpecsVerification]{FairRpss}}, or the continuous ranked 
+#'   probability score \code{\link[SpecsVerification]{EnsCrps}}, etc.
+#' 
 #' @section Parallel processing:
 #'   Parallel processing is enabled using the \code{\link[parallel]{parallel}} 
 #'   package. Prallel verification is using \code{ncpus} \code{FORK} clusters 
@@ -211,7 +223,8 @@ veriApply <- function(verifun, fcst, obs, fcst.ref=NULL, tdim=length(dim(fcst)) 
     } 
   }
 
-  nind <- c(nens=nens, nref=nref, nobs=1, nprob=nprob, nthresh=nthresh)
+  nind <- c(nens, nref, 1, nprob, nthresh)
+  names(nind) <- c("nens", "nref", "nobs", "nprob", "nthresh")
   if (hasparallel){
     on.exit(parallel::stopCluster(.cl))
     out <- Tmatrix(parallel::parApply(cl=.cl, 

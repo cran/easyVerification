@@ -2,7 +2,7 @@
 % Please edit documentation in R/EnsRocss.R
 \name{EnsRocss}
 \alias{EnsRocss}
-\title{Skill score for area under the ROC curve}
+\title{Skill Score for Area under the ROC Curve}
 \usage{
 EnsRocss(ens, ens.ref, obs)
 }

@@ -1,6 +1,6 @@
-# Ens2AFC.R compute generalized discrimination score
+# Ens2AFC.R Generalized Discrimination Score
 #
-#     Copyright (C) 2015 MeteoSwiss
+#     Copyright (C) 2016 MeteoSwiss
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -17,35 +17,33 @@
 #
 
 #' @name Ens2AFC
+#'   
+#' @title Generalized Discrimination Score
 #' 
-#' @title
-#' Generalized discrimination score
-#' 
-#' @description
-#' Computes the generalized discrimination score for ensemble forecasts
+#' @description Computes the generalized discrimination score for ensemble
+#' forecasts after (Weigel and Mason, 2011).
 #' 
 #' @param ens n x m matrix of n forecasts for m ensemble members
 #' @param obs vector of n verifying observations
 #' @param ... additional arguments not used in function (for compatibility)
+#'   
+#' @details This function computes the generalized discrimination score for
+#' ensemble forecasts with continuous observations as described in Weigel and
+#' Mason (2011).
 #' 
-#' @details
-#' This function computes the generalized discrimination score for ensemble
-#' forecasts with continuous observations as described in Weigel and Mason (2011).
-#' 
-#' @references
-#' Weigel, A.P., and S.J. Mason (2011). The Generalized Discrimination Score for
-#' Ensemble Forecasts. Monthly Weather Review, 139(9), 3069-3074.
-#' doi:10.1175/MWR-D-10-05069.1
+#' @references Weigel, A.P., and S.J. Mason (2011). The Generalized
+#' Discrimination Score for Ensemble Forecasts. Monthly Weather Review, 139(9),
+#' 3069-3074. doi:10.1175/MWR-D-10-05069.1
 #' 
 #' @examples
 #' tm <- toymodel()
 #' Ens2AFC(tm$fcst, tm$obs)
 #' 
 #' @seealso \code{\link{veriApply}}
-#' 
+#'   
 #' @export
 Ens2AFC <- function(ens, obs, ...){
-  return(0.5*(1 + cor(rank.ensembles(ens), obs, method='kendall', use='p')))
+  return(0.5*(1 + cor(rankEnsCpp(ens), obs, method='kendall', use='p')))
 }
 
 #' @rdname Ens2AFC

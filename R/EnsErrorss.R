@@ -1,6 +1,6 @@
-# EnsErrorss.R compute ensemble mean error skill scores
+# EnsErrorss.R Ensemble Mean Error Skill Scores
 #
-#     Copyright (C) 2015 MeteoSwiss
+#     Copyright (C) 2016 MeteoSwiss
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -17,20 +17,21 @@
 #
 
 #' @name EnsErrorss
+#'   
+#' @title Ensemble Mean Error Skill scores
 #' 
-#' @title
-#' Compute various ensemble mean error skill scores
-#' 
-#' @description
-#' \code{EnsMess} computes the mean error, \code{EnsMaess} the mean absolute error,
-#' \code{EnsMsess} the mean squared error, and \code{EnsRmsess} the square root of
-#' the mean squared error (for consistency with the veri package).
+#' @description Computes various ensemble mean error skill scores.
+#' \code{EnsMess} computes the mean error, \code{EnsMaess} the mean absolute
+#' error, \code{EnsMsess} the mean squared error, and \code{EnsRmsess} the
+#' square root of the mean squared error (for consistency with the veri
+#' package).
 #' 
 #' @param ens n x k matrix of n forecasts from k ensemble members
 #' @param ens.ref n x l matrix of m reference forecasts from l ensemble members
-#' @param obs n verifying observations 
-#' @param type specifying what error metric to compute, one of [me, mae, mse, rmse]
-#' 
+#' @param obs n verifying observations
+#' @param type specifying what error metric to compute, one of [me, mae, mse,
+#'   rmse]
+#'   
 #' @examples
 #' tm <- toymodel()
 #' 
@@ -42,7 +43,7 @@
 #' 
 #' 
 #' @seealso \code{\link{veriApply}}, \code{\link{EnsError}}
-#' 
+#'   
 #' @export
 EnsErrorss <- function(ens, ens.ref, obs, type){
   stopifnot(is.matrix(ens), is.matrix(ens.ref), 

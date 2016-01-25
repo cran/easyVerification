@@ -6,7 +6,7 @@
 \alias{EnsMess}
 \alias{EnsMsess}
 \alias{EnsRmsess}
-\title{Compute various ensemble mean error skill scores}
+\title{Ensemble Mean Error Skill scores}
 \usage{
 EnsErrorss(ens, ens.ref, obs, type)
 
@@ -25,12 +25,15 @@ EnsRmsess(ens, ens.ref, obs)
 
 \item{obs}{n verifying observations}
 
-\item{type}{specifying what error metric to compute, one of [me, mae, mse, rmse]}
+\item{type}{specifying what error metric to compute, one of [me, mae, mse,
+  rmse]}
 }
 \description{
-\code{EnsMess} computes the mean error, \code{EnsMaess} the mean absolute error,
-\code{EnsMsess} the mean squared error, and \code{EnsRmsess} the square root of
-the mean squared error (for consistency with the veri package).
+Computes various ensemble mean error skill scores.
+\code{EnsMess} computes the mean error, \code{EnsMaess} the mean absolute
+error, \code{EnsMsess} the mean squared error, and \code{EnsRmsess} the
+square root of the mean squared error (for consistency with the veri
+package).
 }
 \examples{
 tm <- toymodel()

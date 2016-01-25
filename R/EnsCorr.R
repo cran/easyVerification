@@ -1,6 +1,6 @@
-# EnsCorr.R ensemble mean correlation
+# EnsCorr.R Correlation with Ensemble Mean
 #
-#     Copyright (C) 2015 MeteoSwiss
+#     Copyright (C) 2016 MeteoSwiss
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -16,13 +16,14 @@
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-#' Ensemble mean correlation
+#' Correlation with Ensemble Mean
 #' 
-#' Computes the ensemble mean correlation (Pearson) with the veryfing observations
+#' Computes the ensemble mean correlation (Pearson) with the veryfing
+#' observations.
 #' 
 #' @param ens n x k matrix of n forecasts from k ensemble members
 #' @param obs n verifying observations
-#' 
+#'   
 #' @examples
 #' tm <- toymodel()
 #' 
@@ -33,7 +34,7 @@
 #' veriApply("EnsCorr", tm$fcst, tm$obs)
 #' 
 #' @seealso \code{\link{veriApply}}
-#' 
+#'   
 #' @export
 EnsCorr <- function(ens, obs){
   stopifnot(is.matrix(ens), is.vector(obs), length(obs) == nrow(ens))

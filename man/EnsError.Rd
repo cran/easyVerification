@@ -6,7 +6,7 @@
 \alias{EnsMe}
 \alias{EnsMse}
 \alias{EnsRmse}
-\title{Compute various ensemble mean error metrics}
+\title{Ensemble Mean Error}
 \usage{
 EnsError(ens, obs, type)
 
@@ -23,12 +23,14 @@ EnsRmse(ens, obs)
 
 \item{obs}{n verifying observations}
 
-\item{type}{specifying what error metric to compute, one of [me, mae, mse, rmse]}
+\item{type}{specifying what error metric to compute, one of [me, mae, mse,
+  rmse]}
 }
 \description{
-\code{EnsMe} computes the mean error, \code{EnsMae} the mean absolute error,
-\code{EnsMse} the mean squared error, and \code{EnsRmse} the square root of
-the mean squared error (for consistency with the veri package).
+Computes various ensemble mean error scores. \code{EnsMe}
+computes the mean error, \code{EnsMae} the mean absolute error, \code{EnsMse}
+the mean squared error, and \code{EnsRmse} the square root of the mean
+squared error (for consistency with the veri package).
 }
 \examples{
 #forecast and observations

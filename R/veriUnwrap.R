@@ -1,6 +1,6 @@
-# veriUnwrap.R unwrap arguments to hand over to verification functions
+# veriUnwrap.R Unwrap Arguments to Hand Over to Verification Functions
 #
-#     Copyright (C) 2015 MeteoSwiss
+#     Copyright (C) 2016 MeteoSwiss
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -16,10 +16,10 @@
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-#' Unwrap arguments and hand over to function
+#' Unwrap Arguments and Hand Over to Verification Function
 #' 
-#' decomposes input argument into forecast and verifying observations and hands 
-#' these over to the function provided
+#' Decomposes input arguments into forecast, verifying observations, and
+#' reference forecast and hands these over to the function provided.
 #' 
 #' @param x n x k + 1 matrix with n forecasts of k ensemble members plus the 
 #'   verifying observations
@@ -41,9 +41,9 @@
 #'   forecast is provided (i.e. \code{ncol(x) == nens + 1}), a climatological 
 #'   forecast is constructed from the \code{n} verifying observations.
 #'   
-#'   The elements of vector \code{nind} have to be named with \code{nens}
-#'   containing the number of ensemble members, \code{nref} the number of
-#'   ensemble members in the reference forecast for skill scores, \code{nobs}
+#'   The elements of vector \code{nind} have to be named with \code{nens} 
+#'   containing the number of ensemble members, \code{nref} the number of 
+#'   ensemble members in the reference forecast for skill scores, \code{nobs} 
 #'   the number of observations (only one supported), \code{nprob} the number of
 #'   probability thresholds, and \code{nthresh} the number of absolute threshold
 #'   for conversion of continuous forecasts to category forecasts.
@@ -76,7 +76,7 @@ veriUnwrap <- function(x, verifun, nind=c(nens=ncol(x) - 1, nref=0, nobs=1, npro
   xmask <- apply(!is.na(x), 1, all)
   x <- x[xmask,,drop=FALSE]
   ## check whether this is a skill score or a score
-  is.skill <- tolower(substr(verifun, nchar(verifun) - 1, nchar(verifun))) == 'ss'
+  is.skill <- tolower(substr(verifun, nchar(verifun) - 1, nchar(verifun))) == 'ss' | verifun == 'CorrDiff'
   is.dress <- tolower(substr(verifun, 1, 5)) == 'dress'
   if (is.skill){
     if (nn > nens + 1){
@@ -103,6 +103,12 @@ veriUnwrap <- function(x, verifun, nind=c(nens=ncol(x) - 1, nref=0, nobs=1, npro
                   convert2prob(x[,nn], prob=prob, threshold=threshold), ...)          
     }
   }
+  
+  ## hack to get veriUnwrap to accept non-list named vector output
+  if (length(names(out)) == length(out)){
+    out <- as.list(out)
+  }
+  
 
   ## check whether output has to be expanded with NA
   is.expand <- !all(xmask) & (length(out) == sum(xmask) | is.list(out))

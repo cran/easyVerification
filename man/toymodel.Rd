@@ -3,7 +3,7 @@
 \name{toymodel}
 \alias{toyarray}
 \alias{toymodel}
-\title{Create example forecast-observation pairs}
+\title{Create Example Forecast-Observation Pairs}
 \usage{
 toymodel(N = 35, nens = 51, alpha = 0.5, beta = 0)
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/FairSprErr.R
 \name{FairSprErr}
 \alias{FairSprErr}
-\title{Fair spread-error ratio}
+\title{Fair Spread to Error Ratio}
 \usage{
 FairSprErr(ens, obs)
 }
@@ -12,10 +12,10 @@ FairSprErr(ens, obs)
 \item{obs}{vector with n verifying observations}
 }
 \description{
-Modular function that computes the spread to error ratio (\code{SPR}) for
-probabilistic forecasts - not unlike the functions in SpecsVerification.
-\code{SPR > 1} indicates overdispersion (underconfidence), whereas \code{SPR
-< 1} indicates overconfidence in the forecasts.
+Compute the spread to error ratio (\code{SPR}) for probabilistic forecasts -
+not unlike the functions in SpecsVerification. \code{SPR > 1} indicates
+overdispersion (underconfidence), whereas \code{SPR < 1} indicates
+overconfidence in the forecasts.
 }
 \details{
 Here we define the spread-error rate as the square root of the ratio

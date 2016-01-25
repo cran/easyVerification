@@ -2,7 +2,7 @@
 % Please edit documentation in R/EnsRoca.R
 \name{EnsRoca}
 \alias{EnsRoca}
-\title{Area under the ROC curve}
+\title{Area Under the ROC Curve}
 \usage{
 EnsRoca(ens, obs)
 }

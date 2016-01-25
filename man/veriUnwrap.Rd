@@ -2,7 +2,7 @@
 % Please edit documentation in R/veriUnwrap.R
 \name{veriUnwrap}
 \alias{veriUnwrap}
-\title{Unwrap arguments and hand over to function}
+\title{Unwrap Arguments and Hand Over to Verification Function}
 \usage{
 veriUnwrap(x, verifun, nind = c(nens = ncol(x) - 1, nref = 0, nobs = 1, nprob
   = 0, nthresh = 0), ...)
@@ -20,8 +20,8 @@ thresholds (see details)}
 \item{...}{additional arguments passed on to \code{verifun}}
 }
 \description{
-decomposes input argument into forecast and verifying observations and hands
-these over to the function provided
+Decomposes input arguments into forecast, verifying observations, and
+reference forecast and hands these over to the function provided.
 }
 \details{
 Only forecasts with non-missing observation and complete ensembles

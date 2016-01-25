@@ -2,7 +2,7 @@
 % Please edit documentation in R/count2prob.R
 \name{count2prob}
 \alias{count2prob}
-\title{Convert counts to probabilities}
+\title{Convert Ensemble Counts to Probabilities}
 \usage{
 count2prob(x, type = 3)
 }

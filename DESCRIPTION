@@ -1,7 +1,7 @@
 Package: easyVerification
-Title: Ensemble Forecast Verification for Large Datasets
-Version: 0.1.8
-Date: 2015-10-15
+Title: Ensemble Forecast Verification for Large Data Sets
+Version: 0.2.0
+Date: 2016-01-25
 Authors@R: c(person("Jonas", "Bhend", email = "jonas.bhend@meteoswiss.ch",
     role = c("aut", "cre")),
     person("Jacopo", "Ripoldi", role="ctb"),
@@ -14,21 +14,22 @@ Authors@R: c(person("Jonas", "Bhend", email = "jonas.bhend@meteoswiss.ch",
     person("Joaqu\'in", "Bedia Jimenez", role='ctb'),
     person("Matteo", "De Felice", role='ctb'))
 Description: Set of tools to simplify application of atomic forecast verification
-    metrics for (comparative) verification of ensemble forecasts to large datasets.
+    metrics for (comparative) verification of ensemble forecasts to large data sets.
     The forecast metrics are imported from the 'SpecsVerification' package, and
     additional forecast metrics are provided with this package. Alternatively,
     new user-defined forecast scores can be implemented using the example scores
     provided and applied using the functionality of this package.
 Depends: R (>= 3.0), SpecsVerification, stats, utils
-Imports: RCurl, pbapply
+Imports: RCurl, pbapply, Rcpp
 Suggests: testthat, knitr, parallel, R.rsp
+LinkingTo: Rcpp
 License: GPL-3
 Copyright: MeteoSwiss
 LazyData: true
 URL: http://www.meteoswiss.ch
 BugReports: https://github.com/MeteoSwiss/easyVerification/issues
 VignetteBuilder: knitr, R.rsp
-Packaged: 2015-10-15 14:15:00 UTC; bhj
+Packaged: 2016-01-25 07:48:32 UTC; bhj
 Author: Jonas Bhend [aut, cre],
   Jacopo Ripoldi [ctb],
   Claudia Mignani [ctb],
@@ -40,6 +41,6 @@ Author: Jonas Bhend [aut, cre],
   Joaqu'in Bedia Jimenez [ctb],
   Matteo De Felice [ctb]
 Maintainer: Jonas Bhend <jonas.bhend@meteoswiss.ch>
-NeedsCompilation: no
+NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2015-10-15 18:09:15
+Date/Publication: 2016-01-25 08:55:15

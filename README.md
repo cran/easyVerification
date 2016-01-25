@@ -20,7 +20,13 @@ The forecast metrics are imported from the `SpecsVerification` package. Addition
 Additional forecast verification metrics can be added by the user following the examples above.
 
 ## Installation 
-You can get the latest version using
+You can get the latest version from CRAN
+
+```r
+install.packages("easyVerification")
+```
+
+You can get the latest development version using
 
 ```r
 devtools::install_github("MeteoSwiss/easyVerification")
@@ -43,7 +49,7 @@ suppressPackageStartupMessages(library(easyVerification))
 
 ## check out what is included in easyVerification
 ls(pos="package:easyVerification")
-#>  [1] "convert2prob" "countEns"     "Ens2AFC"      "EnsCorr"     
+#>  [1] "convert2prob" "count2prob"   "Ens2AFC"      "EnsCorr"     
 #>  [5] "EnsError"     "EnsErrorss"   "EnsMae"       "EnsMaess"    
 #>  [9] "EnsMe"        "EnsMess"      "EnsMse"       "EnsMsess"    
 #> [13] "EnsRmse"      "EnsRmsess"    "EnsRoca"      "EnsRocss"    
@@ -92,7 +98,7 @@ system.time({
   tm.rocss <- veriApply("EnsRocss", tm$fcst, tm$obs, prob=1:2/3)  
 })
 #>    user  system elapsed 
-#>   2.376   0.164   2.783
+#>   1.984   0.008   2.000
 
 ## run the ROC skill score with parallelization
 system.time({
@@ -101,7 +107,7 @@ system.time({
 #> Loading required namespace: parallel
 #> [1] "Number of CPUs 3"
 #>    user  system elapsed 
-#>   0.112   0.036   1.305
+#>   0.088   0.040   0.824
 ```
 
 To get additional help and examples please see the vignette `vignette('easyVerification')` or the help pages of the functions in `easyVerification` (e.g. `help(veriApply)`).

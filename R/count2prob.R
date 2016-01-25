@@ -1,6 +1,6 @@
-# count2prob Convert counts to probabilities
+# count2prob Convert Ensemble Counts to Probabilities
 #
-#     Copyright (C) 2015 MeteoSwiss
+#     Copyright (C) 2016 MeteoSwiss
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-#' Convert counts to probabilities
+#' Convert Ensemble Counts to Probabilities
 #' 
 #' Using plotting positions as described in Wilks (2011), counts of 
 #' occurences per forecast category are converted to probabilities

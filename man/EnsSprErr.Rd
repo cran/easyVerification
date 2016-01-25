@@ -2,7 +2,7 @@
 % Please edit documentation in R/EnsSprErr.R
 \name{EnsSprErr}
 \alias{EnsSprErr}
-\title{Compute spread-error ratio}
+\title{Spread to Error Ratio}
 \usage{
 EnsSprErr(ens, obs)
 }
@@ -12,15 +12,14 @@ EnsSprErr(ens, obs)
 \item{obs}{vector with n verifying observations}
 }
 \description{
-Modular function that computes the spread to error ratio (SPR) for probabilistic
-forecasts - not unlike the functions in SpecsVerification. SPR > 1 indicates
-overdispersion (underconfidence), whereas SPR < indicates overconfidence in the
-forecasts.
+Computes the spread to error ratio (SPR) for probabilistic forecasts - not
+unlike the functions in SpecsVerification. SPR > 1 indicates overdispersion
+(underconfidence), whereas SPR < indicates overconfidence in the forecasts.
 }
 \details{
-Here we define the spread-error rate as the square root of the ratio of mean
-ensemble variance to the mean squared error of the ensemble mean with the
-verifying observations
+Here we define the spread-error rate as the square root of the ratio
+of mean ensemble variance to the mean squared error of the ensemble mean with
+the verifying observations
 }
 \examples{
 tm <- toymodel()

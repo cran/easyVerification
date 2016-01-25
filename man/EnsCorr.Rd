@@ -2,7 +2,7 @@
 % Please edit documentation in R/EnsCorr.R
 \name{EnsCorr}
 \alias{EnsCorr}
-\title{Ensemble mean correlation}
+\title{Correlation with Ensemble Mean}
 \usage{
 EnsCorr(ens, obs)
 }
@@ -12,7 +12,8 @@ EnsCorr(ens, obs)
 \item{obs}{n verifying observations}
 }
 \description{
-Computes the ensemble mean correlation (Pearson) with the veryfing observations
+Computes the ensemble mean correlation (Pearson) with the veryfing
+observations.
 }
 \examples{
 tm <- toymodel()

@@ -1,6 +1,6 @@
-# EnsError.R compute ensemble mean error metrics
+# EnsError.R Ensemble Mean Error
 #
-#     Copyright (C) 2015 MeteoSwiss
+#     Copyright (C) 2016 MeteoSwiss
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -17,19 +17,19 @@
 #
 
 #' @name EnsError
+#'   
+#' @title Ensemble Mean Error
 #' 
-#' @title
-#' Compute various ensemble mean error metrics
-#' 
-#' @description
-#' \code{EnsMe} computes the mean error, \code{EnsMae} the mean absolute error,
-#' \code{EnsMse} the mean squared error, and \code{EnsRmse} the square root of
-#' the mean squared error (for consistency with the veri package).
+#' @description Computes various ensemble mean error scores. \code{EnsMe}
+#' computes the mean error, \code{EnsMae} the mean absolute error, \code{EnsMse}
+#' the mean squared error, and \code{EnsRmse} the square root of the mean
+#' squared error (for consistency with the veri package).
 #' 
 #' @param ens n x k matrix of n forecasts from k ensemble members
-#' @param obs n verifying observations 
-#' @param type specifying what error metric to compute, one of [me, mae, mse, rmse]
-#' 
+#' @param obs n verifying observations
+#' @param type specifying what error metric to compute, one of [me, mae, mse,
+#'   rmse]
+#'   
 #' @examples
 #' #forecast and observations
 #' tm <- toymodel()
@@ -40,7 +40,7 @@
 #' EnsMe(tm$fcst, tm$obs)
 #' 
 #' @seealso \code{\link{veriApply}}, \code{\link{EnsErrorss}}
-#' 
+#'   
 #' @export
 EnsError <- function(ens, obs, type){
   stopifnot(is.matrix(ens), is.vector(obs), length(obs) == nrow(ens))

@@ -31,20 +31,27 @@ Forecast metrics are imported from the `SpecsVerification` package. Additional v
 At the time of publication these forecast skill metrics were included:
 
 1. Mean error (`EnsMe`), mean absolute error(`EnsMae`), mean squared error (`EnsMse`), and root mean squared error (`EnsRmse`) of the ensemble mean and their skill scores (e.g. `EnsRmsess`)
-2. Correlation with the ensemble mean (`EnsCorr`)
+2. Correlation with the ensemble mean (`EnsCorr` or `Corr` and `CorrDiff` from `SpecsVerification`)
 3. Spread to error ratio (`EnsSprErr`)
 4. Are under the ROC curve (`EnsRoca`) and its skill score (`EnsRocss`)
+5. The generalized discrimination score for ensemble forecasts (`Ens2AFC`)
 
 In addition, the following forecast scores from `SpecsVerification` can be used:
 
 1. Fair (`FairRps`) and standard (`EnsRps`) rank probability scores and skill scores (e.g. `FairRpss`)
 2. Fair (`FairCrps`) and standard (`EnsCrps`) continuous ranked probability scores and skill scores (e.g. `FairCrpss`)
+3. Dressed scores (`DressIgn`, `DressCrps`) and their skill scores (`DressIgnSs`, `DressCrpss`) with default ensemble dressing method ("silverman")
 
 Additional forecast verification metrics can be added by the user. This is illustrated in Section XX of this document.
 
 ## Installation 
-You can get the latest version using 
+You can get the latest version from CRAN
 ```{r, eval=FALSE}
+install.packages("easyVerification")
+```
+
+You can get the latest development version using
+```{r, eval=FALSE} 
 devtools::install_github("MeteoSwiss/easyVerification")
 ```
 
@@ -52,42 +59,41 @@ devtools::install_github("MeteoSwiss/easyVerification")
 
 The workhorse of the `easyVerification` package is a function called `veriApply`. It is used to apply the functions that compute forecast scores and skill scores to large arrays of ensemble forecasts and corresponding observations. The following example illustrates how to compute the continous ranked probability skill score of an ensemble forecast using `veriApply`. 
 
-First, let's generate an ensemble of forecasts and corresponding verifying observations. We assume that there are 100 spatial locations (or lead times or a combination ot these), 30 forecasts instances (forecast times), and 51 ensemble members. The ensemble forecast is furthermore unbiased and well calibrated. 
+First, let's generate an ensemble of forecasts and corresponding verifying observations. We assume that there are 100 spatial locations (or lead times or a combination ot these), 30 forecasts instances (forecast times), and 51 ensemble members. The ensemble forecast is furthermore unbiased and well calibrated. Forecast-observation pairs can be generated using the `toymodel` and `toyarray` functions.
 
 ```{r, echo=TRUE}
-
-signal <- outer(sin(seq(0,3*pi, length=100)) + seq(-2,2,length=100), rnorm(15), '+')
-fcst <- array(rnorm(100*15*51), c(100, 15, 51)) + c(signal)
-obs <- array(rnorm(100*15), c(100, 15)) + c(signal)
+tm <- toyarray(dims=100, N=30, nens=51)
+## inspect the toy model object
+str(tm)
 ```
 
 Next, we compute the continuous ranked probability score (CRPS). This score operates using absolute values of the forecast and observation and no conversion to probabilities is thus required. We use the unbiased (fair) version of the CRPS from the `SpecsVerification` package.
 
 ```{r, echo=TRUE}
-f.crps <- veriApply("FairCrps", fcst=fcst, obs=obs)
+f.crps <- veriApply("FairCrps", fcst=tm$fcst, obs=tm$obs)
 ```
 
 If we were to compute the ranked probability score (RPS) instead, either percentiles of the climatology or absolute thresholds have to be supplied to convert the continuous forecasts and observations into category forecasts previous to the analysis. Percentiles of the climatology are provided using the additional argument `prob=...`, absolute thresholds using `threshold=...`. The percentiles are computed on the forecast instances (here the 2nd dimension of `fcst` and `obs`) using `convert2prob`.
 
 ```{r, echo=TRUE}
-f.rps <- veriApply("FairRps", fcst=fcst, obs=obs, prob=c(1/3,2/3))
-f.rps2 <- veriApply("FairRps", fcst=fcst, obs=obs, threshold=1)
+f.rps <- veriApply("FairRps", fcst=tm$fcst, obs=tm$obs, prob=c(1/3,2/3))
+f.rps2 <- veriApply("FairRps", fcst=tm$fcst, obs=tm$obs, threshold=1)
 ```
 
 Finally, to compute skill scores two approaches are supported. First, skill scores are computed by default with reference to climatological forecasts. For this, no additional arguments have to be supplied. Please note, the output of `veriApply` is of the same data type as the output of the function that is invoked within `veriApply`. For the RPSS and CRPSS, a list with the skill score and the corresponding standard error of the difference between the score and the reference score are supplied. Thus the output from `veriApply` for these functions is also a list with the two components. The dimension of the components follows the input dimension as in the examples above.
 
 ```{r, echo=TRUE}
-f.crpss <- veriApply("FairCrpss", fcst=fcst, obs=obs)
-mode(f.crpss)
-names(f.crpss)
+f.crpss <- veriApply("FairCrpss", fcst=tm$fcst, obs=tm$obs)
+## some skill scores also include uncertainty information (standard errors)
+str(f.crpss)
 range(f.crpss$crpss)
 ```
 
 In addition to computing skill scores against climatological forecasts as the reference, arbitrary ensemble forecasts can be used as a reference. This is achieved by setting the additional argument `fcst.ref=...` to the reference forecast in `veriApply`. For example, let's evaluate the forecast against persistence (of the observations) assuming an anomaly of 0 for observation preceding the first forecast instance.
 
 ```{r, echo=TRUE}
-fcst.ref <- array(cbind(0, obs[,-ncol(obs)]), c(dim(obs), 1))
-f.crpss2 <- veriApply("FairCrpss", fcst=fcst, obs=obs, fcst.ref=fcst.ref)
+fcst.ref <- array(cbind(0, tm$obs[,-ncol(tm$obs)]), c(dim(tm$obs), 1))
+f.crpss2 <- veriApply("FairCrpss", fcst=tm$fcst, obs=tm$obs, fcst.ref=fcst.ref)
 par(mar=c(5,5,1,1))
 plot(f.crpss$crpss, f.crpss2$crpss, asp=1,
      xlab='CRPSS against climatology', ylab='CRPSS against persistence')
@@ -143,4 +149,27 @@ range(f.best)
 ```
 
 Functions using a forecast matrix and observation vector as input and returning either a single value, a list, or a vector of the same length as the observations can be used with `veriApply` as long as the arguments are named as in the example above and argument names do not conflict with argument names used in `veriApply`. Please note that if your function name ends in `...ss`, the assumption is that you are trying to compute a skill score and therefore a reference forecast will be supplied (i.e. the climatological forecast by default). 
+
+
+## Parallel processing
+
+As of `easyVerification 0.1.7.0`, parallel processing is supported under *NIX systems. The following minimal example illustrates how to use the parallel processing capabilities of `easyVerification`.
+```{r, echo=TRUE}
+## generate a toy-model forecast observation set of 
+## 10 x 10 forecast locations (e.g. lon x lat)
+tm <- toyarray(c(10,10))
+
+## run and time the ROC skill score for tercile forecasts without parallelization
+system.time({
+  tm.rocss <- veriApply("EnsRocss", tm$fcst, tm$obs, prob=1:2/3)  
+})
+
+## run the ROC skill score with parallelization
+system.time({
+  tm.rocss.par <- veriApply("EnsRocss", tm$fcst, tm$obs, prob=1:2/3, parallel=TRUE)
+})
+```
+
+To get additional help and examples please see the vignette `{r, eval=FALSE} vignette('easyVerification')` or the help pages of the functions in `easyVerification` (e.g. `{r, eval=FALSE} help(veriApply)`).
+
 

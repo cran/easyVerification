@@ -68,3 +68,29 @@ test_that("Multidimensional probability and absolute thresholds", {
   expect_equal(veriApply('EnsRpss', fcst=fcst, obs=obs, threshold=1),
                veriApply('EnsRpss', fcst=fcst + signal, obs=obs+signal, threshold=as.matrix(signal) + 1))
 })
+
+test_that('Reference forecasts', {
+  fcst <- array(rnorm(5*3*10*5), c(5,3,10,5))
+  obs <- array(rnorm(5*3*10), c(5,3,10))
+  ro.cross <- lapply(1:10, function(x) setdiff(1:10, x))
+  ro.forward <- lapply(1:10, function(x) seq(if (x > 5) 1 else x + 1, if (x > 5) x - 1 else 10))
+  ro.block <- lapply(1:10, function(x) setdiff(1:10, x + seq(-1,1)))
+  sub.ind <- setdiff(1:10, c(1,5,9:10))
+  ro.sub <- lapply(1:10, function(x) sub.ind)
+  ro.subcross <- lapply(1:10, function(x) setdiff(sub.ind, x))
+  expect_equal(veriApply("FairCrpss", fcst=fcst, obs=obs, strategy='forward'),
+               veriApply("FairCrpss", fcst=fcst, obs=obs, strategy=ro.forward))
+  expect_equal(veriApply("FairCrpss", fcst=fcst, obs=obs, strategy='crossval'),
+               veriApply("FairCrpss", fcst=fcst, obs=obs, strategy=ro.cross))
+  expect_equal(veriApply("FairCrpss", fcst=fcst, obs=obs, strategy=list(type='crossval', blocklength=3)),
+               veriApply("FairCrpss", fcst=fcst, obs=obs, strategy=ro.block))
+  expect_equal(veriApply("FairCrpss", fcst=fcst, obs=obs, strategy=list(indices=sub.ind)),
+               veriApply("FairCrpss", fcst=fcst, obs=obs, strategy=ro.sub))
+  expect_equal(veriApply("FairCrpss", fcst=fcst, obs=obs, strategy=list(type='crossval', indices=sub.ind)),
+               veriApply("FairCrpss", fcst=fcst, obs=obs, strategy=ro.subcross))
+  expect_equal(veriApply("FairRpss", fcst=fcst, obs=obs, prob=1:2/3),
+               veriApply("climFairRpss", fcst=fcst, obs=obs, prob=1:2/3))
+  expect_message(veriApply("FairRpss", fcst=fcst, obs=obs, prob=1:2/3))
+  expect_false(all(unlist(veriApply("FairRpss", fcst=fcst, obs=obs, threshold=0)) == unlist(veriApply("climFairRpss", fcst=fcst, obs=obs, threshold=0))))
+})
+

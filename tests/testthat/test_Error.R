@@ -7,14 +7,13 @@ obs <- rep(1, 3)
 test_that('Mean error (bias)', {
   expect_is(EnsMe(fcst, obs), 'numeric')  
   expect_equal(EnsMe(fcst, obs), 0.5)
-  expect_equal(EnsMess(fcst, fcst, obs), 0)
-  expect_equal(EnsMess(fcst, fcst, obs), EnsErrorss(fcst, fcst, obs, type='me'))
 })
 
 test_that('Mean absolute error', {
   expect_is(EnsMe(fcst, obs), 'numeric')  
   expect_equal(EnsMae(fcst, obs), 0.5)
   expect_equal(EnsMaess(fcst, fcst, obs), 0)
+  expect_equal(EnsMaess(fcst, fcst, obs), EnsErrorss(fcst, fcst, obs, type='mae'))
 })
 
 test_that('Mean squared error', {

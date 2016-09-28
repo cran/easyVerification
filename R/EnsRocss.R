@@ -52,29 +52,28 @@
 #' @examples
 #' tm <- toymodel()
 #' 
-#' ## compute ROC skill score for forecasts of x <= 0, 0 <= x < 1, and x > 1
-#' ## skill score is computed using climatological forecast as reference
-#' veriApply("EnsRocss", tm$fcst, tm$obs, threshold=c(0,1))
+#' ## compute ROC area score for forecasts with categories x <= 0, 
+#' ## 0 <= x < 1, and x > 1
+#' veriApply("EnsRoca", tm$fcst, tm$obs, threshold=c(0,1))
 #'   
 #' @seealso \code{\link{veriApply}}, \code{\link{EnsRoca}}
 #'   
 #' @export
 EnsRocss <- function(ens, ens.ref, obs){
-  roc.area <- EnsRoca(ens, obs)
-  if (all(ens.ref == rep(ens.ref[1,], each=nrow(ens.ref)))){
-    roc.out <- lapply(roc.area, function(x) 2*x - 1)   
-    ## compute sigma
-    N1 <- apply(obs, 2, sum)
-    N0 <- nrow(obs) - N1
-    roc.sigma <- 2 * sqrt(1/12 * (1/N0 + 1/N1 + 1/(N0*N1)))
-    roc.sigma[N1 == 0] <- NA
-    roc.sigma <- as.list(roc.sigma)
-    names(roc.sigma) <- paste0('cat', seq(along=roc.sigma), '.sigma')
-    roc.out <- c(roc.out, roc.sigma)
-  } else {
-    roc.ref <- EnsRoca(ens.ref, obs)
-    roc.out <- Map(function(x,y) x/y - 1, x=roc.area, y=roc.ref)
+  .Deprecated("EnsRoca")
+  if (!all(ens.ref == rep(ens.ref[1,], each=nrow(ens.ref)))){
+    stop("ROC skill score is not implemented (nor defined) for reference forecasts other than a constant climatological forecast.")
   }
+  roc.area <- EnsRoca(ens, obs)
+  roc.out <- lapply(roc.area, function(x) 2*x - 1)   
+  ## compute sigma
+  N1 <- apply(obs, 2, sum)
+  N0 <- nrow(obs) - N1
+  roc.sigma <- 2 * sqrt(1/12 * (1/N0 + 1/N1 + 1/(N0*N1)))
+  roc.sigma[N1 == 0] <- NA
+  roc.sigma <- as.list(roc.sigma)
+  names(roc.sigma) <- paste0('cat', seq(along=roc.sigma), '.sigma')
+  roc.out <- c(roc.out, roc.sigma)
   
   return(roc.out)
 }

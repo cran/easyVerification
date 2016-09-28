@@ -69,10 +69,17 @@ convert2prob <- function(x, prob=NULL, threshold=NULL, multi.model=FALSE){
   } 
   ## convert probability to absolute threshold
   if (is.numeric(prob)){
+    xthresh <- x
+    if (is.matrix(x)){
+      if(all(apply(x, 1, function(y) all(y == x[1,])))){
+        xthresh <- x[1,]
+      }
+    }
+    
     if (multi.model){
-      threshold <- apply(x, 2, quantile, sort(prob), na.rm=T, type=8)
+      threshold <- apply(xthresh, 2, quantile, sort(prob), na.rm=T, type=8)
     } else {
-      threshold <- quantile(x, sort(prob), na.rm=T, type=8)      
+      threshold <- quantile(xthresh, sort(prob), na.rm=T, type=8)      
     }
   }
   ## compute occurence per class

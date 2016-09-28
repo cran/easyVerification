@@ -18,7 +18,7 @@
 
 #' Unwrap Arguments and Hand Over to Verification Function
 #' 
-#' Decomposes input arguments into forecast, verifying observations, and
+#' Decomposes input arguments into forecast, verifying observations, and 
 #' reference forecast and hands these over to the function provided.
 #' 
 #' @param x n x k + 1 matrix with n forecasts of k ensemble members plus the 
@@ -27,11 +27,14 @@
 #' @param nind named vector with number of ensemble members, ensemble members of
 #'   reference forecasts, observations (defaults to 1), probability or absolute 
 #'   thresholds (see details)
+#' @param ref.ind list with specifications for the reference forecast
+#'   (see details)
 #' @param ... additional arguments passed on to \code{verifun}
 #'   
-#' @details Only forecasts with non-missing observation and complete ensembles 
-#'   are computed. All other forecasts are set to missing. For aggregate metrics
-#'   (e.g. skill scores) the metric is computed over non-missing 
+#' @details Forecast verification metrics are only computed for forecasts with 
+#'   non-missing verifying observation and at least one non-missing ensemble 
+#'   member. Metrics for all other forecasts are set to missing. For aggregate 
+#'   metrics (e.g. skill scores) the metric is computed over non-missing 
 #'   observation/forecast pairs only.
 #'   
 #'   For computation of skill scores, reference forecasts can be provided. That 
@@ -48,9 +51,21 @@
 #'   probability thresholds, and \code{nthresh} the number of absolute threshold
 #'   for conversion of continuous forecasts to category forecasts.
 #'   
+#'   \code{ref.ind} specifies the set-up of the climatological reference 
+#'   forecast for skill scores if no explicit reference forecast is provided
+#'   (see \code{\link{indRef}}).
+#'      
+#'   
+#' @note Out-of-sample reference forecasts are not fully supported for 
+#'   categorical forecasts defined on the distribution of forecast values (e.g. 
+#'   using the argument \code{prob}). Whereas only the years specified in 
+#'   \code{ref.ind} are used for the reference forecasts, the probability 
+#'   thresholds for the reference forecasts are defined on the collection of
+#'   years specified in \code{ref.ind}.
+#'   
 #' @seealso \code{\link{veriApply}}
 #'   
-veriUnwrap <- function(x, verifun, nind=c(nens=ncol(x) - 1, nref=0, nobs=1, nprob=0, nthresh=0), ...){
+veriUnwrap <- function(x, verifun, nind=c(nens=ncol(x) - 1, nref=0, nobs=1, nprob=0, nthresh=0), ref.ind=NULL, ...){
   nens <- nind['nens']
   nref <- nind['nref']
   nobs <- nind['nobs']
@@ -76,13 +91,18 @@ veriUnwrap <- function(x, verifun, nind=c(nens=ncol(x) - 1, nref=0, nobs=1, npro
   xmask <- apply(!is.na(x), 1, all)
   x <- x[xmask,,drop=FALSE]
   ## check whether this is a skill score or a score
-  is.skill <- tolower(substr(verifun, nchar(verifun) - 1, nchar(verifun))) == 'ss' | verifun == 'CorrDiff'
+  is.skill <- tolower(substr(verifun, nchar(verifun) - 1, nchar(verifun))) == 'ss' | substr(verifun, nchar(verifun) - 3, nchar(verifun)) == 'Diff'
   is.dress <- tolower(substr(verifun, 1, 5)) == 'dress'
   if (is.skill){
     if (nn > nens + 1){
       xref <- x[,-c(1:nens, nn), drop=F]
     } else {
-      xref <- t(array(x[,nn], c(nrow(x), nrow(x))))      
+      ## build reference forecast according to specifications in ref.ind
+      if (is.null(ref.ind)){
+        xref <- t(array(x[,nn], c(nrow(x), nrow(x))))              
+      } else {
+        xref <- generateRef(x[,nn], ref.ind)
+      }
     }
     if (is.dress){
       out <- vfun(SpecsVerification::DressEnsemble(x[,1:nens]),

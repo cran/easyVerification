@@ -2,7 +2,7 @@
 #'
 #' @name easyVerification
 #' @docType package
-#' @import SpecsVerification RCurl pbapply stats utils
+#' @import SpecsVerification pbapply stats utils
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib easyVerification
 NULL

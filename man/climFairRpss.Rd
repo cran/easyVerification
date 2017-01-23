@@ -5,7 +5,7 @@
 \title{Calculate Fair Ranked Probability Skill Score Against Climatological
 Reference Forecast.}
 \usage{
-climFairRpss(ens, ens.ref, obs)
+climFairRpss(ens, ens.ref, obs, format = c("category", "member"))
 }
 \arguments{
 \item{ens}{N*K matrix. ens[i,j] is the number of ensemble members that
@@ -15,11 +15,16 @@ predict category j at time i.}
 
 \item{obs}{N*K matrix. obs[i,j] = 1 if category j is observed at time i, 0
 otherwise.}
+
+\item{format}{additional argument for use with \code{SpecsVerification >= 0.5}.
+Do not change this argument manually (except when using \code{climFairRpss}, 
+as standalone function).}
 }
 \value{
-A list with the following elements: \code{rpss}: The value of the
-skill score. \code{sigma.rpss}: The standard deviation of the skill score,
-approximated by propagation of uncertainty.
+A list with the following elements: \code{rpss|skillscore}: The value of the
+skill score. \code{sigma.rpss|skillscore.sd}: The standard deviation of the skill score,
+approximated by propagation of uncertainty. Please note that the naming changes with the
+new version of \code{SpecsVerification}.
 }
 \description{
 Calculate the fair ranked probability skill score (fair RPSS) between an

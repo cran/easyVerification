@@ -31,10 +31,14 @@
 #' @param ens.ref N*K matrix, similar to ens
 #' @param obs N*K matrix. obs[i,j] = 1 if category j is observed at time i, 0
 #'   otherwise.
+#' @param format additional argument for use with \code{SpecsVerification >= 0.5}.
+#'   Do not change this argument manually (except when using \code{climFairRpss}, 
+#'   as standalone function).
 #'   
-#' @return A list with the following elements: \code{rpss}: The value of the
-#' skill score. \code{sigma.rpss}: The standard deviation of the skill score,
-#' approximated by propagation of uncertainty.
+#' @return A list with the following elements: \code{rpss|skillscore}: The value of the
+#' skill score. \code{sigma.rpss|skillscore.sd}: The standard deviation of the skill score,
+#' approximated by propagation of uncertainty. Please note that the naming changes with the
+#' new version of \code{SpecsVerification}.
 #'   
 #' @examples
 #' tm <- toymodel()
@@ -45,18 +49,28 @@
 #' @seealso \code{\link{veriApply}}
 #'   
 #' @export
-climFairRpss <- function (ens, ens.ref, obs) {
-  stopifnot(all(dim(ens) == dim(obs)))
-  stopifnot(all(dim(ens.ref) == dim(obs)))
-  rps.ens <- FairRps(ens, obs)
-  rps.ref <- EnsRps(ens.ref, obs)
-  i.nna <- which(!is.na(rps.ens + rps.ref))
-  rps.ens <- rps.ens[i.nna]
-  rps.ref <- rps.ref[i.nna]
-  N <- length(i.nna)
-  rpss <- 1 - mean(rps.ens)/mean(rps.ref)
-  rpss.sigma <- 1/sqrt(N) * sqrt(var(rps.ens)/mean(rps.ref)^2 + 
-                                   var(rps.ref) * mean(rps.ens)^2/mean(rps.ref)^4 - 2 * 
-                                   cov(rps.ens, rps.ref) * mean(rps.ens)/mean(rps.ref)^3)
-  list(rpss = rpss, rpss.sigma = rpss.sigma)
+climFairRpss <- function (ens, ens.ref, obs, format=c("category", "member")) {
+  if (packageVersion("SpecsVerification") >= 0.5){
+    skillfun <- 'SkillScore'
+    out <- get(skillfun)(changearg(EnsRps, format=format)(ens, obs, R.new=Inf),
+                         changearg(EnsRps, format=format)(ens.ref, obs, R.new=NA),
+                         handle.na="use.pairwise.complete")    
+  } else {
+    stopifnot(all(dim(ens) == dim(obs)))
+    stopifnot(all(dim(ens.ref) == dim(obs)))
+    rps.ens <- FairRps(ens, obs)
+    rps.ref <- EnsRps(ens.ref, obs)
+    i.nna <- which(!is.na(rps.ens + rps.ref))
+    rps.ens <- rps.ens[i.nna]
+    rps.ref <- rps.ref[i.nna]
+    N <- length(i.nna)
+    rpss <- 1 - mean(rps.ens)/mean(rps.ref)
+    rpss.sigma <- 1/sqrt(N) * sqrt(var(rps.ens)/mean(rps.ref)^2 + 
+                                     var(rps.ref) * mean(rps.ens)^2/mean(rps.ref)^4 - 2 * 
+                                     cov(rps.ens, rps.ref) * mean(rps.ens)/mean(rps.ref)^3)
+    out <- list(rpss = rpss, rpss.sigma = rpss.sigma)
+    
+  }
+  
+  return(out)
 }

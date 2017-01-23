@@ -53,15 +53,12 @@
 #'   
 #'   \code{ref.ind} specifies the set-up of the climatological reference 
 #'   forecast for skill scores if no explicit reference forecast is provided
-#'   (see \code{\link{indRef}}).
+#'   (see \code{\link{indRef}}). Also, \code{ref.ind} is used to determine the 
+#'   baseline to estimate the percentile-based category boundaries to convert
+#'   continuous forecasts to category probabilities.
 #'      
 #'   
-#' @note Out-of-sample reference forecasts are not fully supported for 
-#'   categorical forecasts defined on the distribution of forecast values (e.g. 
-#'   using the argument \code{prob}). Whereas only the years specified in 
-#'   \code{ref.ind} are used for the reference forecasts, the probability 
-#'   thresholds for the reference forecasts are defined on the collection of
-#'   years specified in \code{ref.ind}.
+#' @note Out-of-sample reference forecasts are now fully supported.
 #'   
 #' @seealso \code{\link{veriApply}}
 #'   
@@ -72,7 +69,7 @@ veriUnwrap <- function(x, verifun, nind=c(nens=ncol(x) - 1, nref=0, nobs=1, npro
   nprob <- nind['nprob']
   nthresh <- nind['nthresh']
   stopifnot(ncol(x) >= nens + 1)
-  vfun <- match.fun(verifun)
+  vfun <- changearg(match.fun(verifun), format='member')
   ## extract prob or thresh
   if (nprob > 0){
     prob <- (x[,seq(nens + nref + nobs + 1,ncol(x))])[1:nprob]
@@ -109,9 +106,9 @@ veriUnwrap <- function(x, verifun, nind=c(nens=ncol(x) - 1, nref=0, nobs=1, npro
                   SpecsVerification::DressEnsemble(xref),
                   x[,nn])
     } else {
-      out <- vfun(convert2prob(x[,1:nens,drop=FALSE], prob=prob, threshold=threshold),
-                  convert2prob(xref, prob=prob, threshold=threshold),
-                  convert2prob(x[,nn], prob=prob, threshold=threshold), ...)      
+      out <- vfun(convert2prob(x[,1:nens,drop=FALSE], prob=prob, threshold=threshold, ref.ind=ref.ind),
+                  convert2prob(xref, prob=prob, threshold=threshold, ref.ind=ref.ind),
+                  convert2prob(x[,nn], prob=prob, threshold=threshold, ref.ind=ref.ind), ...)      
     }
   } else {
     stopifnot(nn == nens + 1)
@@ -119,8 +116,8 @@ veriUnwrap <- function(x, verifun, nind=c(nens=ncol(x) - 1, nref=0, nobs=1, npro
       out <- vfun(SpecsVerification::DressEnsemble(x[,1:nens]),
                   x[,nn])
     } else {
-      out <- vfun(convert2prob(x[,1:nens,drop=FALSE], prob=prob, threshold=threshold),
-                  convert2prob(x[,nn], prob=prob, threshold=threshold), ...)          
+      out <- vfun(convert2prob(x[,1:nens,drop=FALSE], prob=prob, threshold=threshold, ref.ind=ref.ind),
+                  convert2prob(x[,nn], prob=prob, threshold=threshold, ref.ind=ref.ind), ...)          
     }
   }
   

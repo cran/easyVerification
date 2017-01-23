@@ -87,11 +87,11 @@
 #'   
 #' @section Out-of-sample reference forecasts:\code{strategy} specifies the 
 #'   set-up of the climatological reference forecast for skill scores if no 
-#'   explicit reference forecast is provided. \code{strategy} by default is set 
-#'   to \code{'none'}, that is all available observations are used as equiprobable
-#'   members of a reference forecast. Alternatively, \code{strategy} can be set to 
-#'   \code{'crossval'} for leave-one-out crossvalidated reference forecasts, 
-#'   or \code{'forward'} for a forward protocol (see \code{\link{indRef}}).
+#'   explicit reference forecast is provided. The default is \code{strategy = "none"}, 
+#'   that is all available observations are used as equiprobable
+#'   members of a reference forecast. Alternatively, \code{strategy = "crossval"} 
+#'   can be used for leave-one-out crossvalidated reference forecasts, 
+#'   or \code{strategy = "forward"} for a forward protocol (see \code{\link{indRef}}).
 #'   
 #'   Alternatively, a list with named parameters corresponding to the input
 #'   arguments of \code{\link{indRef}} can be supplied for more fine-grained

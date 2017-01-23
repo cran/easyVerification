@@ -48,8 +48,8 @@ test_that('Missing value handling', {
 test_that('Reference forecasts for skill scores', {
   x <- rep(1,3)
   xx <- array(rnorm(15, mean=1), c(3,5))
-  expect_true(veriApply('EnsCrpss', xx, x)$crpss < veriApply('EnsCrpss', xx, x, fcst.ref=0*xx)$crpss)
-  expect_equal(veriApply('EnsCrpss', xx, x)$crpss, veriApply('EnsCrpss', xx, x, fcst.ref=t(array(x, rep(length(x), 2))))$crpss)
+  expect_true(veriApply('EnsCrpss', xx, x)[[1]] < veriApply('EnsCrpss', xx, x, fcst.ref=0*xx)[[1]])
+  expect_equal(veriApply('EnsCrpss', xx, x)[[1]], veriApply('EnsCrpss', xx, x, fcst.ref=t(array(x, rep(length(x), 2))))[[1]])
 })
 
 test_that("Multidimensional probability and absolute thresholds", {

@@ -16,36 +16,57 @@
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-#' Convert to Probability / Category Forecast
+#' @name convert2prob
 #' 
-#' Converts the continuous ensemble forecast to counts of ensemble members per
-#' category. The categories can be defined relative to the ensemble distribution
-#' (using \code{prob}) or relative to absolute values for the category
-#' thresholds (using \code{threshold}, see details).
+#' @aliases prob2thresh
+#' 
+#' @title Convert to Probability / Category Forecast
+#' 
+#' @description \code{convert2prob} Converts the continuous ensemble forecast to
+#' counts of ensemble members per category. The categories can be defined
+#' relative to the ensemble distribution (using \code{prob}) or relative to
+#' absolute values for the category thresholds (using \code{threshold}, see
+#' details). \code{prob2thresh} converts the relative threshold to absolute
+#' thresholds for later processing. \code{expandthresh} expands the vector or
+#' matrix of thresholds to fit the input data.
 #' 
 #' @param x input vector or matrix
 #' @param prob thresholds for categorical forecasts (defaults to NULL)
-#' @param threshold absolute thresholds for categorical forecasts (defaults to
+#' @param threshold absolute thresholds for categorical forecasts (defaults to 
 #'   NULL)
-#' @param multi.model logical, are we dealing with initial condition (the
+#' @param ref.ind list of forecast/obs instances to be used to estimate 
+#'   percentile thresholds
+#' @param multi.model logical, are we dealing with initial condition (the 
 #'   default) or multi-model ensembles (see details)?
 #'   
-#' @details In case both \code{prob} and \code{threshold} are set to
-#' \code{NULL}, the function returns the input \code{x} without modification. If
-#' \code{prob} is set, a matrix with the number of occurences per class for a
-#' given quantile of the full distribution (e.g. temperature above/below the
-#' median). If \code{threshold} is set, the classes are defined based on the
-#' absolute value (e.g. temperature above/below 13 deg. C). Multiple classes are
-#' supported.
-#' 
-#' If \code{multi.model = TRUE}, the relative thresholds supplied by \code{prob}
-#' are ensemble member specific, i.e. are estimated for each ensemble member 
-#' separately. This is in particular applicable for multi-model ensembles with 
-#' model dependent biases.
-#' 
-#' @return Matrix of occurences per class (i.e. the number of ensemble members
-#' per class, or an indicator for the observations)
-#' 
+#' @details In case both \code{prob} and \code{threshold} are set to 
+#'   \code{NULL}, the function returns the input \code{x} without modification.
+#'   If \code{prob} is set, a matrix with the number of occurences per class for
+#'   a given quantile of the full distribution (e.g. temperature above/below the
+#'   median). If \code{threshold} is set, the classes are defined based on the 
+#'   absolute value (e.g. temperature above/below 13 deg. C). Multiple classes
+#'   are
+#'   
+#'   Only certain formats of \code{threshold} and \code{prob} are supported.
+#'   \code{prob} has to be a vector with percentile thresholds separating the
+#'   different classes. \code{threshold} can be a vector, matrix or array with
+#'   the first entry corresponding to the different classes, and the last to the
+#'   different ensemble members (if present). Thereby, time/forecast varying
+#'   thresholds can potentially be supplied (although I am not sure this is
+#'   useful or needed).
+#'   
+#'   If \code{ref.ind} is specified, only the specified indices of the input
+#'   variables are used to estimate the percentile thresholds (\code{prob}). If
+#'   used with \code{threshold}, or without anything, \code{ref.ind} has no effect. 
+#'   
+#'   If \code{multi.model = TRUE}, the relative thresholds supplied by
+#'   \code{prob} are ensemble member specific, i.e. are estimated for each
+#'   ensemble member separately. This is in particular applicable for
+#'   multi-model ensembles with model dependent biases.
+#'   
+#' @return Matrix of occurences per class (i.e. the number of ensemble members 
+#'   per class, or an indicator for the observations)
+#'   
 #' @examples
 #' tm <- toymodel()
 #' 
@@ -61,42 +82,91 @@
 #'   
 #' @keywords utilities
 #' @export
-convert2prob <- function(x, prob=NULL, threshold=NULL, multi.model=FALSE){
+convert2prob <- function(x, prob=NULL, threshold=NULL, ref.ind=NULL,
+                         multi.model=FALSE){
+  ## check if input arguments comply
   stopifnot(is.vector(x) | is.matrix(x))
   stopifnot(any(!is.na(x)))
+
+  ## do nothing if you do not need to do something, simple things first
+  if (is.null(prob) & is.null(threshold)) return(x)
   if (!is.null(prob) & !is.null(threshold)){
     stop('Both probability and absolute thresholds provided')
   } 
-  ## convert probability to absolute threshold
-  if (is.numeric(prob)){
-    xthresh <- x
-    if (is.matrix(x)){
+  
+  if (!is.null(prob)){
+    ## convert probability to absolute threshold
+    threshold <- prob2thresh(x=x, prob=prob, ref.ind=ref.ind, multi.model=multi.model)
+  } else {
+    ## blow up  threshold to size of nclass x size(x)
+    if (is.null(prob)) threshold <- expandthresh(threshold, x)
+  }
+
+  ## count occurrences in bins
+  nclass <- nrow(threshold) + 1
+  xtmp <- array(apply(rep(x, each=nrow(threshold)) > threshold, -1, sum), dim(as.matrix(x))) + 1
+  xout <- t(apply(xtmp, 1, tabulate, nbins=nclass))      
+  xout[apply(as.matrix(is.na(x)), 1, any),] <- NA
+  
+  return(xout)
+}
+
+
+#' @rdname convert2prob
+prob2thresh <- function(x, prob, ref.ind=NULL, multi.model=FALSE){
+  
+  ## reduce size of x if constructed from observations (i.e. all members the same)
+  ## to guarantee a consistent estimate of the quantiles
+  xthresh <- x
+  if (is.matrix(x)){
+    if (is.null(ref.ind)){
       if(all(apply(x, 1, function(y) all(y == x[1,])))){
         xthresh <- x[1,]
       }
+    } else if (length(unique(c(x))) <= max(unlist(ref.ind))) {
+      ## generate indices of reference forecast to reverse
+      ## engineer original vector
+      iref <- generateRef(sort(unique(unlist(ref.ind))), ref.ind)
+      if (all(tapply(x, iref, function(y) all(y == y[1])))){
+        iind <- which(!duplicated(c(iref)))
+        xthresh <- x[iind][order(iref[iind])]
+      }
     }
-    
+  }
+  
+  ## apply out-of-sample strategy if needed
+  ## already adjust the size of threshold to size of output to minimize errors due to ambiguity
+  if (is.null(ref.ind)){
     if (multi.model){
-      threshold <- apply(xthresh, 2, quantile, sort(prob), na.rm=T, type=8)
+      threshold <- apply(as.matrix(xthresh), 2, quantile, sort(prob), na.rm=T, type=8)
+      threshold <- array(threshold[rep(1:nrow(threshold), length=length(prob)*nrow(as.matrix(x))),], 
+                         c(length(prob), size(x)))
     } else {
-      threshold <- quantile(xthresh, sort(prob), na.rm=T, type=8)      
+      threshold <- array(quantile(xthresh, sort(prob), na.rm=T, type=8), c(length(prob), size(x))) 
     }
-  }
-  ## compute occurence per class
-  if (is.numeric(threshold)){
-    nens <- ncol(as.matrix(x))
-    nclass <- nrow(as.matrix(threshold)) + 1
-    if (multi.model & !is.null(prob) & nens > 1){
-      xtmp <- array(sapply(1:nens, function(i) 
-        apply(sapply(threshold[,i], function(y) x[,i] > y), 1, sum)), 
-        dim(as.matrix(x))) + 1
-    } else {
-      xtmp <- array(apply(sapply(sort(threshold), function(y) c(x) > y), 1, sum), dim(as.matrix(x))) + 1
-    }
-    xout <- t(apply(xtmp, 1, tabulate, nbins=nclass))      
-    xout[apply(as.matrix(is.na(x)), 1, any),] <- NA
   } else {
-    xout <- x
+    if (multi.model){
+      threshold <- aperm(sapply(seq(along=ref.ind), function(i){
+        apply(as.matrix(xthresh)[ref.ind[[i]],, drop=FALSE], 2, quantile, sort(prob), na.rm=T, type=8)
+      }, simplify='array'), c(1,3,2))
+    } else {
+      threshold <- array(sapply(seq(along=ref.ind), function(i){
+        quantile(as.matrix(xthresh)[ref.ind[[i]],], sort(prob), na.rm=T, type=8)
+      }, simplify='array'), c(length(prob), size(x)))
+    }
   }
-  return(xout)
+  return(threshold)
+}
+
+#' @rdname convert2prob
+expandthresh <- function(threshold, x){
+  nclass <- size(threshold)[1]
+  if (is.vector(threshold)){
+    threshold <- array(threshold, c(nclass, size(x)))
+  } else if (! all(size(threshold)[-1] == size(x))){
+    stopifnot(ncol(threshold) == ncol(as.matrix(x)))
+    threshold <- array(threshold[,rep(1:ncol(threshold), each=nrow(x))],
+                       c(nrow(threshold), size(x)))
+  } 
+  return(threshold)
 }

@@ -49,15 +49,12 @@ Forecast verification metrics are only computed for forecasts with
   
   \code{ref.ind} specifies the set-up of the climatological reference 
   forecast for skill scores if no explicit reference forecast is provided
-  (see \code{\link{indRef}}).
+  (see \code{\link{indRef}}). Also, \code{ref.ind} is used to determine the 
+  baseline to estimate the percentile-based category boundaries to convert
+  continuous forecasts to category probabilities.
 }
 \note{
-Out-of-sample reference forecasts are not fully supported for 
-  categorical forecasts defined on the distribution of forecast values (e.g. 
-  using the argument \code{prob}). Whereas only the years specified in 
-  \code{ref.ind} are used for the reference forecasts, the probability 
-  thresholds for the reference forecasts are defined on the collection of
-  years specified in \code{ref.ind}.
+Out-of-sample reference forecasts are now fully supported.
 }
 \seealso{
 \code{\link{veriApply}}

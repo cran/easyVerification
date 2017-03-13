@@ -298,6 +298,17 @@ veriApply <- function(verifun, fcst, obs, fcst.ref=NULL, tdim=length(dim(fcst)) 
   ## reformat the output by converting to list
   if (is.list(out)){
     lnames <- names(out[[1]])
+    ## improve error handling with missing values in forecast
+    if (is.null(lnames)) {
+      errormessage <- "Only named lists can be processed. Problem with missing values in forecast?"
+      outlen <- sapply(out, length)
+      outnotlen <- outlen != median(outlen)
+      if (any(outnotlen)){
+        fcst.i <- which(outnotlen[maskexpand])
+        errormessage <- paste0(errormessage, '\n  Forecast at index ', paste(head(fcst.i), collapse=', '), " cause(s) problems")
+      }
+      stop(errormessage)
+    }
     olist <- list()
     for (ln in lnames) olist[[ln]] <- sapply(out, function(x) x[[ln]])
   } else {

@@ -6,7 +6,7 @@ fcst <- obs
 fcst2 <- obs*0.2 + 0.2
 fcst3 <- array(0.25, dim(obs))
 obs2 <- rbind(diag(1, 4)[-4,], diag(1, 4)[-3,], diag(1,4)[-1,])
-fcst4 <- pmax(obs2 + rnorm(length(obs2)), 0)
+fcst4 <- pmax(obs2 + runif(length(obs2)), 0)
 fcst4 <- fcst4 / rowSums(fcst4)
 
 test_that('ROC area values', {

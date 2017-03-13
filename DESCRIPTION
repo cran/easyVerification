@@ -1,7 +1,7 @@
 Package: easyVerification
 Title: Ensemble Forecast Verification for Large Data Sets
-Version: 0.4.0
-Date: 2017-01-20
+Version: 0.4.1
+Date: 2017-03-13
 Authors@R: c(person("MeteoSwiss",
     role=c("aut", "cph")),
     person("Jonas", "Bhend",  role = c("cre"), 
@@ -14,7 +14,8 @@ Authors@R: c(person("MeteoSwiss",
     person("Mark", "Liniger", role="ctb"),
     person("Andreas", "Weigel", role="ctb"),
     person("Joaqu\'in", "Bedia Jimenez", role='ctb'),
-    person("Matteo", "De Felice", role='ctb'))
+    person("Matteo", "De Felice", role='ctb'), 
+    person("Stefan", "Siegert", role="ctb"))
 Description: Set of tools to simplify application of atomic forecast
     verification metrics for (comparative) verification of ensemble forecasts
     to large data sets. The forecast metrics are imported from the
@@ -32,8 +33,7 @@ LazyData: true
 URL: http://www.meteoswiss.ch
 VignetteBuilder: rmarkdown, R.rsp
 RoxygenNote: 5.0.1
-NeedsCompilation: yes
-Packaged: 2017-01-22 19:51:24 UTC; bhj
+Packaged: 2017-03-13 16:09:52 UTC; bhj
 Author: MeteoSwiss [aut, cph],
   Jonas Bhend [cre],
   Jacopo Ripoldi [ctb],
@@ -44,7 +44,9 @@ Author: MeteoSwiss [aut, cph],
   Mark Liniger [ctb],
   Andreas Weigel [ctb],
   Joaqu'in Bedia Jimenez [ctb],
-  Matteo De Felice [ctb]
+  Matteo De Felice [ctb],
+  Stefan Siegert [ctb]
 Maintainer: Jonas Bhend <jonas.bhend@meteoswiss.ch>
+NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2017-01-23 08:21:28
+Date/Publication: 2017-03-13 17:18:53

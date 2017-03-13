@@ -13,5 +13,5 @@
 #' @docType package
 #' @import SpecsVerification pbapply stats utils
 #' @importFrom Rcpp sourceCpp
-#' @useDynLib easyVerification
+#' @useDynLib easyVerification, .registration=TRUE
 NULL

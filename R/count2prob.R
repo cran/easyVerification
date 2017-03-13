@@ -71,10 +71,13 @@ count2prob <- function(x, type=3){
   stopifnot(is.matrix(x))
   stopifnot(any(!is.na(x)))
   stopifnot(type %in% 1:6)
-  is.wholenumber <- function(x,tol=.Machine$double.eps**0.5) abs(x - round(x)) < tol
-  stopifnot(is.wholenumber(rowSums(x)))
+  is.wholenumber <- function(x,tol=.Machine$double.eps**0.5) ifelse(is.na(x), TRUE, abs(x - round(x)) < tol)
 
-  if (isTRUE(all.equal(rowSums(x), rep(1, nrow(x))))){
+  ## mask missing values
+  rs <- rowSums(x)
+  stopifnot(is.wholenumber(rs))
+
+  if (isTRUE(all.equal(rs, round(rs/abs(rs))))){
     xout <- x
   } else {
     ## select parameters to determine plotting position

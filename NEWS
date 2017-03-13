@@ -1,3 +1,12 @@
+Changes in version 0.4.1
+
+  * Fixed CRAN NOTE on registration of native routines
+  * Fixed bug in setting up reference forecasts with missing observations
+  * Improved error handling with missing values in forecast
+  * Improve performance of `convert2prob` with reduced baseline
+  * Added missing value support for `count2prob`
+  * Fixed unit test causing episodic errors
+
 Changes in version 0.4.0
 
   * Adopted to new version of SpecsVerification (0.5.0)

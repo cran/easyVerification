@@ -86,7 +86,7 @@ veriUnwrap <- function(x, verifun, nind=c(nens=ncol(x) - 1, nref=0, nobs=1, npro
   nn <- ncol(x)  
   ## mask missing values
   xmask <- apply(!is.na(x), 1, all)
-  x <- x[xmask,,drop=FALSE]
+  ## x <- x[xmask,,drop=FALSE] (won't work with reference forecast generation)
   ## check whether this is a skill score or a score
   is.skill <- tolower(substr(verifun, nchar(verifun) - 1, nchar(verifun))) == 'ss' | substr(verifun, nchar(verifun) - 3, nchar(verifun)) == 'Diff'
   is.dress <- tolower(substr(verifun, 1, 5)) == 'dress'
@@ -102,22 +102,22 @@ veriUnwrap <- function(x, verifun, nind=c(nens=ncol(x) - 1, nref=0, nobs=1, npro
       }
     }
     if (is.dress){
-      out <- vfun(SpecsVerification::DressEnsemble(x[,1:nens]),
-                  SpecsVerification::DressEnsemble(xref),
-                  x[,nn])
+      out <- vfun(SpecsVerification::DressEnsemble(x[xmask,1:nens,drop=FALSE]),
+                  SpecsVerification::DressEnsemble(xref[xmask,,drop=FALSE]),
+                  x[xmask,nn])
     } else {
-      out <- vfun(convert2prob(x[,1:nens,drop=FALSE], prob=prob, threshold=threshold, ref.ind=ref.ind),
-                  convert2prob(xref, prob=prob, threshold=threshold, ref.ind=ref.ind),
-                  convert2prob(x[,nn], prob=prob, threshold=threshold, ref.ind=ref.ind), ...)      
+      out <- vfun(convert2prob(x[xmask,1:nens,drop=FALSE], prob=prob, threshold=threshold, ref.ind=ref.ind),
+                  convert2prob(xref[xmask,,drop=FALSE], prob=prob, threshold=threshold, ref.ind=ref.ind),
+                  convert2prob(x[xmask,nn], prob=prob, threshold=threshold, ref.ind=ref.ind), ...)      
     }
   } else {
     stopifnot(nn == nens + 1)
     if (is.dress){
-      out <- vfun(SpecsVerification::DressEnsemble(x[,1:nens]),
-                  x[,nn])
+      out <- vfun(SpecsVerification::DressEnsemble(x[xmask,1:nens,drop=FALSE]),
+                  x[xmask,nn])
     } else {
-      out <- vfun(convert2prob(x[,1:nens,drop=FALSE], prob=prob, threshold=threshold, ref.ind=ref.ind),
-                  convert2prob(x[,nn], prob=prob, threshold=threshold, ref.ind=ref.ind), ...)          
+      out <- vfun(convert2prob(x[xmask,1:nens,drop=FALSE], prob=prob, threshold=threshold, ref.ind=ref.ind),
+                  convert2prob(x[xmask,nn], prob=prob, threshold=threshold, ref.ind=ref.ind), ...)          
     }
   }
   

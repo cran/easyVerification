@@ -136,13 +136,15 @@ prob2thresh <- function(x, prob, ref.ind=NULL, multi.model=FALSE){
   
   ## apply out-of-sample strategy if needed
   ## already adjust the size of threshold to size of output to minimize errors due to ambiguity
-  if (is.null(ref.ind)){
+  if (length(unique(ref.ind)) <= 1){ ## condition for both is.null or all equal
+    if (is.null(ref.ind)) ref.ind <- list(1:nrow(as.matrix(xthresh)))
     if (multi.model){
-      threshold <- apply(as.matrix(xthresh), 2, quantile, sort(prob), na.rm=T, type=8)
+      threshold <- apply(as.matrix(xthresh)[ref.ind[[1]],,drop=F], 2, quantile, sort(prob), na.rm=T, type=8)
       threshold <- array(threshold[rep(1:nrow(threshold), length=length(prob)*nrow(as.matrix(x))),], 
                          c(length(prob), size(x)))
     } else {
-      threshold <- array(quantile(xthresh, sort(prob), na.rm=T, type=8), c(length(prob), size(x))) 
+      threshold <- array(quantile(as.matrix(xthresh)[ref.ind[[1]],], sort(prob), na.rm=T, type=8), 
+                         c(length(prob), size(x))) 
     }
   } else {
     if (multi.model){

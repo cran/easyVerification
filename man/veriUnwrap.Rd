@@ -59,4 +59,3 @@ Out-of-sample reference forecasts are now fully supported.
 \seealso{
 \code{\link{veriApply}}
 }
-

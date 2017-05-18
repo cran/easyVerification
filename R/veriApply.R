@@ -234,8 +234,10 @@ veriApply <- function(verifun, fcst, obs, fcst.ref=NULL, tdim=length(dim(fcst)) 
   }
   ## mask missing values
   if (na.rm) {
+    ## Only verify forecast/obs pairs with at least 1 complete pair
     xmask <- apply(apply(!is.na(xall[,,1:(nens+nref+1),drop=F]), 1:2, all), 1, any)
   } else {
+    ## Verify only forecast/obs pairs that are completely non-missing
     xmask <- apply(!is.na(xall[,,1:(nens+nref+1),drop=F]), 1, all)
   }
   ## check whether there are complete forecast/observation pairs at all

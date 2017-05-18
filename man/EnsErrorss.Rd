@@ -45,4 +45,3 @@ veriApply("EnsRmsess", fcst=tm$fcst, obs=tm$obs, fcst.ref=tm$fcst + 2)
 \seealso{
 \code{\link{veriApply}}, \code{\link{EnsError}}
 }
-

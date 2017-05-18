@@ -38,4 +38,3 @@ Discrimination Score for Ensemble Forecasts. Monthly Weather Review, 139(9),
 \seealso{
 \code{\link{veriApply}}
 }
-

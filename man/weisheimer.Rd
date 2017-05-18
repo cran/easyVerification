@@ -31,4 +31,3 @@ category forecasts with categories defined relative to the forecast and observed
 climatological distribution (i.e. without systematic bias).
 }
 \keyword{utilities}
-

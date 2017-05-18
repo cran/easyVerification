@@ -5,7 +5,8 @@ xxx <- array(1, c(1,3,4))
 xx <- array(1, c(3,4))
 xxna <- xx
 xxna[,2] <- NA
-x <- rep(1,3)
+xna <- x <- rep(1,3)
+xna[1] <- NA
 xx2 <- array(1, c(2,3,4))
 x2 <- array(1, 2:3)
 x2na <- x2
@@ -43,6 +44,10 @@ test_that('Missing value handling', {
   expect_error(veriApply('EnsMe', xxna, x, na.rm=TRUE)) ## incomplete ensembles are never used
   expect_equal(veriApply('EnsMe', xx2, x2), array(0, 2))
   expect_equal(veriApply('EnsMe', xx2, x2na), array(c(0, NA), 2))
+  expect_is(veriApply("EnsRps", xx, xna, prob=1:2/3, na.rm=T), 'numeric')
+  expect_error(veriApply("EnsRps", xx, xna, prob=1:2/3))
+#  expect_equivalent(veriApply("EnsRps", xx2, rbind(xna, x), prob=1:2/3), 
+#               rbind(NA, veriApply("EnsRps", xx2[2,,], x, prob=1:2/3)))
 })
 
 test_that('Reference forecasts for skill scores', {

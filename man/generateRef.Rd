@@ -3,6 +3,7 @@
 \name{generateRef}
 \alias{generateRef}
 \alias{indRef}
+\alias{generateRef}
 \title{Generate Probabilistic Climatological Ensemble Forecast from 
   Observations}
 \usage{
@@ -69,5 +70,5 @@ To generate reference ensemble forecasts for forecast evaluation
   forecasts not included in \code{indices} (i.e. if \code{nfcst >
   max(indices)}).
 }
-\keyword{utilities}
 
+\keyword{utilities}

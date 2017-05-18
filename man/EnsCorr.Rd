@@ -28,4 +28,3 @@ veriApply("EnsCorr", tm$fcst, tm$obs)
 \seealso{
 \code{\link{veriApply}}
 }
-

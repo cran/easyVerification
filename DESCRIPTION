@@ -1,7 +1,7 @@
 Package: easyVerification
 Title: Ensemble Forecast Verification for Large Data Sets
-Version: 0.4.1
-Date: 2017-03-13
+Version: 0.4.2
+Date: 2017-05-18
 Authors@R: c(person("MeteoSwiss",
     role=c("aut", "cph")),
     person("Jonas", "Bhend",  role = c("cre"), 
@@ -32,8 +32,9 @@ Copyright: MeteoSwiss
 LazyData: true
 URL: http://www.meteoswiss.ch
 VignetteBuilder: rmarkdown, R.rsp
-RoxygenNote: 5.0.1
-Packaged: 2017-03-13 16:09:52 UTC; bhj
+RoxygenNote: 6.0.1
+NeedsCompilation: yes
+Packaged: 2017-05-18 14:45:15 UTC; bhj
 Author: MeteoSwiss [aut, cph],
   Jonas Bhend [cre],
   Jacopo Ripoldi [ctb],
@@ -47,6 +48,5 @@ Author: MeteoSwiss [aut, cph],
   Matteo De Felice [ctb],
   Stefan Siegert [ctb]
 Maintainer: Jonas Bhend <jonas.bhend@meteoswiss.ch>
-NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2017-03-13 17:18:53
+Date/Publication: 2017-05-18 14:50:41 UTC

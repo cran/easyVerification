@@ -14,4 +14,3 @@ with this package. Alternatively, new user-defined forecast scores can be
 implemented using the example scores provided and applied using the
 functionality of this package.
 }
-

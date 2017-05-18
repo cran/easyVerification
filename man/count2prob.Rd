@@ -42,6 +42,7 @@ number of ensemble members. The types are characterized as follows:
   6 \tab Cunnane \tab 2/5
 }
 }
+
 \examples{
 tm <- toymodel()
 
@@ -59,4 +60,3 @@ Academic press.
 \code{\link{convert2prob}} for conversion of continuous forecasts to ensemble counts
 }
 \keyword{utilities}
-

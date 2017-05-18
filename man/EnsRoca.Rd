@@ -2,8 +2,9 @@
 % Please edit documentation in R/EnsRoca.R
 \name{EnsRoca}
 \alias{EnsRoca}
-\alias{EnsRocss}
 \alias{oldEnsRoca}
+\alias{EnsRocss}
+\alias{EnsRocss}
 \title{Area Under the ROC Curve}
 \usage{
 EnsRoca(ens, obs, use.easy = FALSE)
@@ -40,6 +41,7 @@ Computes the area under the ROC curve given the observations.
   Where \eqn{\sigma} is the standard error, \eqn{N_1}{N1} the number of 
   events, and \eqn{N_0}{N0} the number of non-events in category \code{i}.
 }
+
 \examples{
 tm <- toymodel()
 
@@ -55,4 +57,3 @@ Br\"ocker, J. (2012). Probability forecasts. Forecast
 \seealso{
 \code{\link{veriApply}}, \code{\link{EnsRocss}}
 }
-

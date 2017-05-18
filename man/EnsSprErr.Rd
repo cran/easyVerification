@@ -32,4 +32,3 @@ veriApply('EnsSprErr', fcst=tm$fcst, obs=tm$obs)
 \seealso{
 \code{\link{veriApply}}, \code{\link{FairSprErr}}
 }
-

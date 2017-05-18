@@ -16,4 +16,3 @@ Override default arguments of functions. This functionality is used to
 deal with the updated default representation in the SpecsVerification 
 package (>= v0.5).
 }
-

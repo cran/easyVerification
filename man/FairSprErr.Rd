@@ -41,4 +41,3 @@ Weigel, A.P. (2012). Ensemble forecasts. Forecast Verification: A
 \seealso{
 \code{\link{veriApply}}, \code{\link{FairSprErr}}
 }
-

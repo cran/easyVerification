@@ -2,8 +2,9 @@
 % Please edit documentation in R/convert2prob.R
 \name{convert2prob}
 \alias{convert2prob}
-\alias{expandthresh}
 \alias{prob2thresh}
+\alias{prob2thresh}
+\alias{expandthresh}
 \title{Convert to Probability / Category Forecast}
 \usage{
 convert2prob(x, prob = NULL, threshold = NULL, ref.ind = NULL,
@@ -82,4 +83,3 @@ convert2prob(tm$obs, threshold=1)[1,]
 \code{\link{veriApply}}
 }
 \keyword{utilities}
-

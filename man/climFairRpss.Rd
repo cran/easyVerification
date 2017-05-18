@@ -44,4 +44,3 @@ veriApply("climFairRpss", tm$fcst, tm$obs, prob=1:2/3)
 \seealso{
 \code{\link{veriApply}}
 }
-

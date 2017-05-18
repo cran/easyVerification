@@ -138,6 +138,7 @@ If the forecasts and observations are only available as category
   metrics, input and output re-arrangement is not included in the progress 
   bar.
 }
+
 \examples{
 tm <- toyarray()
 f.me <- veriApply('EnsMe', tm$fcst, tm$obs)
@@ -156,4 +157,3 @@ vignette('easyVerification')
   category forecasts (and observations)
 }
 \keyword{utilities}
-

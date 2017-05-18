@@ -22,4 +22,3 @@ sapply(tm, size)
 \code{\link{veriApply}}
 }
 \keyword{utilities}
-

@@ -3,6 +3,7 @@
 \name{EnsIgn}
 \alias{EnsIgn}
 \alias{EnsIgnss}
+\alias{EnsIgnss}
 \title{Ignorance Score}
 \usage{
 EnsIgn(ens, obs, type = 3, ...)
@@ -47,4 +48,3 @@ Wilks, D.S. (2011). Statistical methods in the atmospheric
 \seealso{
 \code{\link{veriApply}}, \code{\link{count2prob}}
 }
-

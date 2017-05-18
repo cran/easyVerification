@@ -2,8 +2,8 @@
 % Please edit documentation in R/EnsError.R
 \name{EnsError}
 \alias{EnsError}
-\alias{EnsMae}
 \alias{EnsMe}
+\alias{EnsMae}
 \alias{EnsMse}
 \alias{EnsRmse}
 \title{Ensemble Mean Error}
@@ -45,4 +45,3 @@ EnsMe(tm$fcst, tm$obs)
 \seealso{
 \code{\link{veriApply}}, \code{\link{EnsErrorss}}
 }
-

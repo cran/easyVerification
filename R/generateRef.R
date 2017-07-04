@@ -106,7 +106,7 @@ indRef <- function(nfcst, type=c('none', 'forward', 'crossval', 'block'),
 #' NULL
 #' 
 #' @param obs vector of observations
-#' @param ind list or matrix of dimension (n x nref) of indices 
+#' @param ind list or matrix of dimension (\code{n x nref}) of indices 
 #'   of the observations to be used for each forecast instance
 #' 
 #' @export

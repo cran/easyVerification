@@ -1,3 +1,7 @@
+Changes in version 0.4.3
+  * Fixed missing value handling when no forecast-obs pairs without missing values are available
+  * Fixed bug with ROCSS
+
 Changes in version 0.4.2
 
   * Fixed bug with missing values and na.rm=T in translating to categorical forecasts in `convert2prob`

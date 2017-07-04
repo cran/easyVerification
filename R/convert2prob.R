@@ -41,7 +41,7 @@
 #'   
 #' @details In case both \code{prob} and \code{threshold} are set to 
 #'   \code{NULL}, the function returns the input \code{x} without modification.
-#'   If \code{prob} is set, a matrix with the number of occurences per class for
+#'   If \code{prob} is set, a matrix with the number of occurrences per class for
 #'   a given quantile of the full distribution (e.g. temperature above/below the
 #'   median). If \code{threshold} is set, the classes are defined based on the 
 #'   absolute value (e.g. temperature above/below 13 deg. C). Multiple classes

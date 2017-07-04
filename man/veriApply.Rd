@@ -30,7 +30,7 @@ scores only)}
 
 \item{na.rm}{logical, should incomplete forecasts be used?}
 
-\item{parallel}{logical, should pararllel execution of verification be used 
+\item{parallel}{logical, should parallel execution of verification be used 
 (see below)?}
 
 \item{maxncpus}{upper bound for self-selected number of CPUs}
@@ -104,7 +104,7 @@ If the forecasts and observations are only available as category
   forecast space-time locations (i.e. same length as 
   \code{length(fcst)/prod(dim(fcst)[c(tdim, ensdim)])}). Alternatively, but 
   equivalently, the thresholds can also be supplied with the dimensionality 
-  correpsonding to the \code{obs} array with the difference that the forecast
+  corresponding to the \code{obs} array with the difference that the forecast
   dimension in \code{obs} contains the category boundaries (absolute or 
   relative) and thus may differ in length.
 }
@@ -126,10 +126,10 @@ If the forecasts and observations are only available as category
 
 \section{Parallel processing}{
  Parallel processing is enabled using the 
-  \code{\link[parallel]{parallel}} package. Prallel verification is using 
+  \code{\link[parallel]{parallel}} package. Parallel verification is using 
   \code{ncpus} \code{FORK} clusters or, if \code{ncpus} are not specified, 
-  one less than the autodetected number of cores. The maximum number of cores
-  used for parallel processing with autodetection of the number of available 
+  one less than the autod-etected number of cores. The maximum number of cores
+  used for parallel processing with auto-detection of the number of available 
   cores can be set with the \code{maxncpus} argument.
   
   Progress bars are available for non-parallel computation of the 

@@ -35,7 +35,7 @@
 #' @param prob probability threshold for category forecasts (see below)
 #' @param threshold absolute threshold for category forecasts (see below)
 #' @param na.rm logical, should incomplete forecasts be used?
-#' @param parallel logical, should pararllel execution of verification be used 
+#' @param parallel logical, should parallel execution of verification be used 
 #'   (see below)?
 #' @param maxncpus upper bound for self-selected number of CPUs
 #' @param ncpus number of CPUs used in parallel computation, self-selected 
@@ -81,7 +81,7 @@
 #'   forecast space-time locations (i.e. same length as 
 #'   \code{length(fcst)/prod(dim(fcst)[c(tdim, ensdim)])}). Alternatively, but 
 #'   equivalently, the thresholds can also be supplied with the dimensionality 
-#'   correpsonding to the \code{obs} array with the difference that the forecast
+#'   corresponding to the \code{obs} array with the difference that the forecast
 #'   dimension in \code{obs} contains the category boundaries (absolute or 
 #'   relative) and thus may differ in length.
 #'   
@@ -99,10 +99,10 @@
 #'   to be used for each forecast can be supplied (see \code{\link{generateRef}}).
 #'   
 #' @section Parallel processing: Parallel processing is enabled using the 
-#'   \code{\link[parallel]{parallel}} package. Prallel verification is using 
+#'   \code{\link[parallel]{parallel}} package. Parallel verification is using 
 #'   \code{ncpus} \code{FORK} clusters or, if \code{ncpus} are not specified, 
-#'   one less than the autodetected number of cores. The maximum number of cores
-#'   used for parallel processing with autodetection of the number of available 
+#'   one less than the autod-etected number of cores. The maximum number of cores
+#'   used for parallel processing with auto-detection of the number of available 
 #'   cores can be set with the \code{maxncpus} argument.
 #'   
 #'   Progress bars are available for non-parallel computation of the 
@@ -241,7 +241,14 @@ veriApply <- function(verifun, fcst, obs, fcst.ref=NULL, tdim=length(dim(fcst)) 
     xmask <- apply(!is.na(xall[,,1:(nens+nref+1),drop=F]), 1, all)
   }
   ## check whether there are complete forecast/observation pairs at all
-  stopifnot(any(xmask))
+  if(!any(xmask)) {
+    warning("No cases without missing values")
+    xall[1,,1:(nens + nref + 1)] <- rnorm(ncol(xall)*(nens + nref + 1))
+    xmask[1] <- TRUE
+    all.na <- TRUE
+  } else {
+    all.na <- FALSE
+  }
  
   ## indices for re-expansion of output
   maskexpand <- rep(NA, length(xmask))
@@ -319,6 +326,9 @@ veriApply <- function(verifun, fcst, obs, fcst.ref=NULL, tdim=length(dim(fcst)) 
 
   ## reexpand the masked values
   olist <- lapply(olist, function(x) as.matrix(x)[maskexpand,])
+  if (all.na){
+    olist <- lapply(olist, function(x) x*NA)
+  }
   
   ## rearrange output to original dimensions
   out <- lapply(olist, function(x){

@@ -36,17 +36,24 @@ test_that('Output format and mode are correct', {
 })
 
 test_that('Missing value handling', {
-  expect_error(veriApply('EnsMe', xx, rep(NA, nrow(xx))))
-  expect_error(veriApply('EnsMe', array(NA, dim(xx)), x))  
-  expect_error(veriApply('EnsMe', xx, c(1,1,NA), na.rm=FALSE))
+  expect_warning(veriApply('EnsMe', xx, rep(NA, nrow(xx))))
+  expect_true(is.na(veriApply('EnsMe', xx, rep(NA, nrow(xx)))))
+  expect_warning(veriApply('EnsMe', array(NA, dim(xx)), x))  
+  expect_true(is.na(veriApply('EnsMe', array(NA, dim(xx)), x)))
+  expect_warning(veriApply('EnsMe', xx, c(1,1,NA), na.rm=FALSE))
+  expect_true(is.na(veriApply('EnsMe', xx, c(1,1,NA), na.rm=FALSE)))
   expect_is(veriApply('EnsMe', xx, c(1,1,NA), na.rm=TRUE), 'numeric')
-  expect_error(veriApply('EnsMe', xxna, x, na.rm=FALSE)) ## incomplete ensembles are never used
-  expect_error(veriApply('EnsMe', xxna, x, na.rm=TRUE)) ## incomplete ensembles are never used
+  expect_warning(veriApply('EnsMe', xxna, x, na.rm=FALSE)) ## incomplete ensembles are never used
+  expect_true(is.na(veriApply('EnsMe', xxna, x, na.rm=FALSE)))
+  expect_warning(veriApply('EnsMe', xxna, x, na.rm=TRUE)) ## incomplete ensembles are never used
+  expect_true(is.na(veriApply('EnsMe', xxna, x, na.rm=TRUE)))
   expect_equal(veriApply('EnsMe', xx2, x2), array(0, 2))
   expect_equal(veriApply('EnsMe', xx2, x2na), array(c(0, NA), 2))
   expect_is(veriApply("EnsRps", xx, xna, prob=1:2/3, na.rm=T), 'numeric')
-  expect_error(veriApply("EnsRps", xx, xna, prob=1:2/3))
-#  expect_equivalent(veriApply("EnsRps", xx2, rbind(xna, x), prob=1:2/3), 
+  expect_warning(veriApply("EnsRps", xx, xna, prob=1:2/3))
+  expect_true(all(is.na(veriApply("EnsRps", xx, xna, prob=1:2/3))) & 
+                length(veriApply("EnsRps", xx, xna, prob=1:2/3)) == nrow(xx))
+  #  expect_equivalent(veriApply("EnsRps", xx2, rbind(xna, x), prob=1:2/3), 
 #               rbind(NA, veriApply("EnsRps", xx2[2,,], x, prob=1:2/3)))
 })
 

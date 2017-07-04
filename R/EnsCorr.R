@@ -18,7 +18,7 @@
 
 #' Correlation with Ensemble Mean
 #' 
-#' Computes the ensemble mean correlation (Pearson) with the veryfing
+#' Computes the ensemble mean correlation (Pearson) with the verifying
 #' observations.
 #' 
 #' @param ens n x k matrix of n forecasts from k ensemble members

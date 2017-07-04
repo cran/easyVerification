@@ -26,7 +26,7 @@ confidence interval}
 }
 \description{
 This function implements the reliability categorisation for forecasts of binary 
-eventsas documented in Weisheimer et al. (2014). It has only been implemented for
+events as documented in Weisheimer et al. (2014). It has only been implemented for
 category forecasts with categories defined relative to the forecast and observed
 climatological distribution (i.e. without systematic bias).
 }

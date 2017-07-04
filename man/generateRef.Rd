@@ -24,7 +24,7 @@ reference forecasts}
 
 \item{obs}{vector of observations}
 
-\item{ind}{list or matrix of dimension (n x nref) of indices 
+\item{ind}{list or matrix of dimension (\code{n x nref}) of indices 
 of the observations to be used for each forecast instance}
 }
 \value{

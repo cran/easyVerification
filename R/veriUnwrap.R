@@ -90,7 +90,9 @@ veriUnwrap <- function(x, verifun, nind=c(nens=ncol(x) - 1, nref=0, nobs=1, npro
   ref.ind <- lapply(ref.ind, function(x) cumsum(xmask)[intersect(x, which(xmask))])[xmask]
   ## x <- x[xmask,,drop=FALSE] (won't work with reference forecast generation)
   ## check whether this is a skill score or a score
-  is.skill <- tolower(substr(verifun, nchar(verifun) - 1, nchar(verifun))) == 'ss' | substr(verifun, nchar(verifun) - 3, nchar(verifun)) == 'Diff'
+  is.skill <- (tolower(substr(verifun, nchar(verifun) - 1, nchar(verifun))) == 'ss' & 
+                 verifun != "EnsRocss" ) |     
+    substr(verifun, nchar(verifun) - 3, nchar(verifun)) == 'Diff'
   is.dress <- tolower(substr(verifun, 1, 5)) == 'dress'
   if (is.skill){
     if (nn > nens + 1){

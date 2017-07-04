@@ -12,7 +12,7 @@ EnsCorr(ens, obs)
 \item{obs}{n verifying observations}
 }
 \description{
-Computes the ensemble mean correlation (Pearson) with the veryfing
+Computes the ensemble mean correlation (Pearson) with the verifying
 observations.
 }
 \examples{

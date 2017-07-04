@@ -19,9 +19,9 @@
 #' Convert Ensemble Counts to Probabilities
 #' 
 #' Using plotting positions as described in Wilks (2011), counts of 
-#' occurences per forecast category are converted to probabilities
-#' of occurence. For ensembles of size 1 (e.g. verifying observations), 
-#' the count vector is returned unaltered (corresponding to occurence 
+#' occurrences per forecast category are converted to probabilities
+#' of occurrence. For ensembles of size 1 (e.g. verifying observations), 
+#' the count vector is returned unaltered (corresponding to occurrence 
 #' probabilities of 0 or 1).
 #' 
 #' 

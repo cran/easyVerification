@@ -29,7 +29,7 @@ percentile thresholds}
 default) or multi-model ensembles (see details)?}
 }
 \value{
-Matrix of occurences per class (i.e. the number of ensemble members 
+Matrix of occurrences per class (i.e. the number of ensemble members 
   per class, or an indicator for the observations)
 }
 \description{

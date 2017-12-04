@@ -13,7 +13,7 @@ EnsIgnss(ens, ens.ref, obs, type = 3)
 \arguments{
 \item{ens}{n x j matrix of n probability forecasts for j categories}
 
-\item{obs}{n x j matrix of occurence of n verifying observations in j 
+\item{obs}{n x j matrix of occurrence of n verifying observations in j 
 categories}
 
 \item{type}{selection of plotting positions to convert ensemble counts to 

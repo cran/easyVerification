@@ -26,7 +26,7 @@
 #'   forecast
 #'   
 #' @param ens n x j matrix of n probability forecasts for j categories
-#' @param obs n x j matrix of occurence of n verifying observations in j 
+#' @param obs n x j matrix of occurrence of n verifying observations in j 
 #'   categories
 #' @param type selection of plotting positions to convert ensemble counts to 
 #'   probabilities (default to 3, see \code{\link{count2prob}}

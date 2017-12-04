@@ -1,6 +1,11 @@
+Changes in version 0.4.4
+  * Added min-fcst threshold for missing value masking (fraction and absolute number of forecasts)
+  * fixed Rcpp dependency problems
+  * fixed NA bug with reference forecasts
+
 Changes in version 0.4.3
-  * Fixed missing value handling when no forecast-obs pairs without missing values are available
-  * Fixed bug with ROCSS
+  * improved missing value handling
+  * fixed bug in "EnsRocss"
 
 Changes in version 0.4.2
 

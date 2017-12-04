@@ -64,7 +64,7 @@
 #'   ensemble member separately. This is in particular applicable for
 #'   multi-model ensembles with model dependent biases.
 #'   
-#' @return Matrix of occurences per class (i.e. the number of ensemble members 
+#' @return Matrix of occurrences per class (i.e. the number of ensemble members 
 #'   per class, or an indicator for the observations)
 #'   
 #' @examples

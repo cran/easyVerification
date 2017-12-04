@@ -47,7 +47,7 @@
 #'   Where \eqn{\sigma} is the standard error, \eqn{N_1}{N1} the number of 
 #'   events, and \eqn{N_0}{N0} the number of non-events in category \code{i}. 
 #'   
-#' @references Br\"ocker, J. (2012). Probability forecasts. Forecast 
+#' @references Broecker, J. (2012). Probability forecasts. Forecast 
 #'   Verification: A Practitioner's Guide in Atmospheric Science, Second 
 #'   Edition, 119-139.
 #' 

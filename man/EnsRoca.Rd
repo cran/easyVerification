@@ -50,7 +50,7 @@ veriApply("EnsRoca", fcst=tm$fcst, obs=tm$obs, prob=1:2/3)
 
 }
 \references{
-Br\"ocker, J. (2012). Probability forecasts. Forecast 
+Broecker, J. (2012). Probability forecasts. Forecast 
   Verification: A Practitioner's Guide in Atmospheric Science, Second 
   Edition, 119-139.
 }

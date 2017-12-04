@@ -17,7 +17,7 @@
 #
 #' Compute Reliability Categories as in Weisheimer et al. (2014)
 #' 
-#' This function implements the reliability categorisation for forecasts of binary 
+#' This function implements the reliability categorization for forecasts of binary 
 #' events as documented in Weisheimer et al. (2014). It has only been implemented for
 #' category forecasts with categories defined relative to the forecast and observed
 #' climatological distribution (i.e. without systematic bias). 

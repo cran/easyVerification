@@ -55,6 +55,16 @@ test_that('Missing value handling', {
                 length(veriApply("EnsRps", xx, xna, prob=1:2/3)) == nrow(xx))
   #  expect_equivalent(veriApply("EnsRps", xx2, rbind(xna, x), prob=1:2/3), 
 #               rbind(NA, veriApply("EnsRps", xx2[2,,], x, prob=1:2/3)))
+  tm <- toymodel()
+  tm$obs[3:5] <- NA
+  expect_true(is.na(suppressWarnings(veriApply("FairCrpss", tm$fcst, tm$obs)[[1]])))
+  expect_true(!is.na(veriApply("FairCrpss", tm$fcst, tm$obs, na.rm=T)[[1]]))
+  expect_true(is.na(suppressWarnings(veriApply("FairCrpss", tm$fcst, tm$obs, na.rm=T, nmin=33)[[1]])))
+  expect_true(is.na(suppressWarnings(veriApply("FairCrpss", tm$fcst, tm$obs, na.rm=T, fracmin=0.95)[[1]])))
+  expect_true(is.na(suppressWarnings(veriApply("FairRpss", tm$fcst, tm$obs, threshold=0)[[1]])))
+  expect_true(!is.na(veriApply("FairRpss", tm$fcst, tm$obs, threshold=0, na.rm=T)[[1]]))
+  expect_true(is.na(suppressWarnings(veriApply("FairRpss", tm$fcst, tm$obs, threshold=0, na.rm=T, nmin=33)[[1]])))
+  expect_true(is.na(suppressWarnings(veriApply("FairRpss", tm$fcst, tm$obs, threshold=0, na.rm=T, fracmin=0.95)[[1]])))
 })
 
 test_that('Reference forecasts for skill scores', {

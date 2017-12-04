@@ -86,8 +86,8 @@ veriUnwrap <- function(x, verifun, nind=c(nens=ncol(x) - 1, nref=0, nobs=1, npro
   nn <- ncol(x)  
   ## mask missing values
   xmask <- apply(!is.na(x), 1, all)
-  ## construct the reference accordingly
-  ref.ind <- lapply(ref.ind, function(x) cumsum(xmask)[intersect(x, which(xmask))])[xmask]
+  ## mask out missing values from reference construction the reference accordingly
+  ref.ind <- lapply(ref.ind, function(x) cumsum(xmask)[intersect(x, which(xmask))])
   ## x <- x[xmask,,drop=FALSE] (won't work with reference forecast generation)
   ## check whether this is a skill score or a score
   is.skill <- (tolower(substr(verifun, nchar(verifun) - 1, nchar(verifun))) == 'ss' & 
@@ -102,7 +102,7 @@ veriUnwrap <- function(x, verifun, nind=c(nens=ncol(x) - 1, nref=0, nobs=1, npro
       if (is.null(ref.ind)){
         xref <- t(array(x[,nn], c(nrow(x), nrow(x))))              
       } else {
-        xref <- generateRef(x[,nn], ref.ind)
+        xref <- generateRef(x[xmask,nn], ref.ind)
       }
     }
     if (is.dress){

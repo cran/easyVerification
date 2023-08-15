@@ -3,12 +3,16 @@
 \name{convert2prob}
 \alias{convert2prob}
 \alias{prob2thresh}
-\alias{prob2thresh}
 \alias{expandthresh}
 \title{Convert to Probability / Category Forecast}
 \usage{
-convert2prob(x, prob = NULL, threshold = NULL, ref.ind = NULL,
-  multi.model = FALSE)
+convert2prob(
+  x,
+  prob = NULL,
+  threshold = NULL,
+  ref.ind = NULL,
+  multi.model = FALSE
+)
 
 prob2thresh(x, prob, ref.ind = NULL, multi.model = FALSE)
 
@@ -19,17 +23,17 @@ expandthresh(threshold, x)
 
 \item{prob}{thresholds for categorical forecasts (defaults to NULL)}
 
-\item{threshold}{absolute thresholds for categorical forecasts (defaults to 
+\item{threshold}{absolute thresholds for categorical forecasts (defaults to
 NULL)}
 
-\item{ref.ind}{list of forecast/obs instances to be used to estimate 
+\item{ref.ind}{list of forecast/obs instances to be used to estimate
 percentile thresholds}
 
-\item{multi.model}{logical, are we dealing with initial condition (the 
+\item{multi.model}{logical, are we dealing with initial condition (the
 default) or multi-model ensembles (see details)?}
 }
 \value{
-Matrix of occurrences per class (i.e. the number of ensemble members 
+Matrix of occurences per class (i.e. the number of ensemble members
   per class, or an indicator for the observations)
 }
 \description{
@@ -42,14 +46,14 @@ thresholds for later processing. \code{expandthresh} expands the vector or
 matrix of thresholds to fit the input data.
 }
 \details{
-In case both \code{prob} and \code{threshold} are set to 
+In case both \code{prob} and \code{threshold} are set to
   \code{NULL}, the function returns the input \code{x} without modification.
   If \code{prob} is set, a matrix with the number of occurrences per class for
   a given quantile of the full distribution (e.g. temperature above/below the
-  median). If \code{threshold} is set, the classes are defined based on the 
+  median). If \code{threshold} is set, the classes are defined based on the
   absolute value (e.g. temperature above/below 13 deg. C). Multiple classes
   are
-  
+
   Only certain formats of \code{threshold} and \code{prob} are supported.
   \code{prob} has to be a vector with percentile thresholds separating the
   different classes. \code{threshold} can be a vector, matrix or array with
@@ -57,11 +61,11 @@ In case both \code{prob} and \code{threshold} are set to
   different ensemble members (if present). Thereby, time/forecast varying
   thresholds can potentially be supplied (although I am not sure this is
   useful or needed).
-  
+
   If \code{ref.ind} is specified, only the specified indices of the input
   variables are used to estimate the percentile thresholds (\code{prob}). If
-  used with \code{threshold}, or without anything, \code{ref.ind} has no effect. 
-  
+  used with \code{threshold}, or without anything, \code{ref.ind} has no effect.
+
   If \code{multi.model = TRUE}, the relative thresholds supplied by
   \code{prob} are ensemble member specific, i.e. are estimated for each
   ensemble member separately. This is in particular applicable for
@@ -71,12 +75,12 @@ In case both \code{prob} and \code{threshold} are set to
 tm <- toymodel()
 
 ## convert to tercile forecasts (only display first forecast and obs)
-convert2prob(tm$fcst, prob=1:2/3)[1,]
-convert2prob(tm$obs, prob=1:2/3)[1,]
+convert2prob(tm$fcst, prob = 1:2 / 3)[1, ]
+convert2prob(tm$obs, prob = 1:2 / 3)[1, ]
 
 ## convert to category forecasts (smaller and larger than 1)
-convert2prob(tm$fcst, threshold=1)[1,]
-convert2prob(tm$obs, threshold=1)[1,]
+convert2prob(tm$fcst, threshold = 1)[1, ]
+convert2prob(tm$obs, threshold = 1)[1, ]
 
 }
 \seealso{

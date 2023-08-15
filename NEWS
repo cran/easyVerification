@@ -1,5 +1,4 @@
 Changes in version 0.4.4
-  * Added min-fcst threshold for missing value masking (fraction and absolute number of forecasts)
   * fixed Rcpp dependency problems
   * fixed NA bug with reference forecasts
 

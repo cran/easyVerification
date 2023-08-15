@@ -1,7 +1,6 @@
 Package: easyVerification
 Title: Ensemble Forecast Verification for Large Data Sets
-Version: 0.4.4
-Date: 2017-12-04
+Version: 0.4.5
 Authors@R: c(person("MeteoSwiss",
     role=c("aut", "cph")),
     person("Jonas", "Bhend",  role = c("cre"), 
@@ -30,12 +29,15 @@ Suggests: testthat, knitr, rmarkdown, parallel, R.rsp, verification
 LinkingTo: Rcpp
 License: GPL-3
 Copyright: MeteoSwiss
-LazyData: true
-URL: http://www.meteoswiss.ch
+URL: https://www.meteoswiss.admin.ch,
+        https://github.com/jonasbhend/easyVerification
 VignetteBuilder: rmarkdown, R.rsp
-RoxygenNote: 6.0.1
+RoxygenNote: 7.2.3
+Encoding: UTF-8
+Config/build/clean-inst-doc: FALSE
+BugReports: https://github.com/jonasbhend/easyVerification/issues
 NeedsCompilation: yes
-Packaged: 2017-12-04 08:58:44 UTC; bhj
+Packaged: 2023-08-15 04:50:23 UTC; bhj
 Author: MeteoSwiss [aut, cph],
   Jonas Bhend [cre],
   Jacopo Ripoldi [ctb],
@@ -51,4 +53,4 @@ Author: MeteoSwiss [aut, cph],
   Katrin Sedlmeier [ctb]
 Maintainer: Jonas Bhend <jonas.bhend@meteoswiss.ch>
 Repository: CRAN
-Date/Publication: 2017-12-04 09:11:43 UTC
+Date/Publication: 2023-08-15 05:20:02 UTC

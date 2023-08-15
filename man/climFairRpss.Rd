@@ -17,7 +17,7 @@ predict category j at time i.}
 otherwise.}
 
 \item{format}{additional argument for use with \code{SpecsVerification >= 0.5}.
-Do not change this argument manually (except when using \code{climFairRpss}, 
+Do not change this argument manually (except when using \code{climFairRpss},
 as standalone function).}
 }
 \value{
@@ -38,7 +38,7 @@ be applied to the reference forecast.
 tm <- toymodel()
 
 ## compute RPSS using veriApply
-veriApply("climFairRpss", tm$fcst, tm$obs, prob=1:2/3)
+veriApply("climFairRpss", tm$fcst, tm$obs, prob = 1:2 / 3)
 
 }
 \seealso{

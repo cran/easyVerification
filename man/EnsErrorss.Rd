@@ -22,11 +22,11 @@ EnsRmsess(ens, ens.ref, obs)
 
 \item{obs}{n verifying observations}
 
-\item{type}{specifying what error metric to compute, one of [me, mae, mse, 
+\item{type}{specifying what error metric to compute, one of [me, mae, mse,
 rmse]}
 }
 \description{
-Computes various ensemble mean error skill scores. 
+Computes various ensemble mean error skill scores.
   \code{EnsMaess} computes the mean absolute error, \code{EnsMsess} the mean
   squared error, and \code{EnsRmsess} the square root of the mean squared
   error.
@@ -35,11 +35,10 @@ Computes various ensemble mean error skill scores.
 tm <- toymodel()
 
 ## compute RMSE skill score against reference forecast with a bias of +2
-EnsErrorss(ens=tm$fcst, ens.ref=tm$fcst + 2, obs=tm$obs, type='rmse')
+EnsErrorss(ens = tm$fcst, ens.ref = tm$fcst + 2, obs = tm$obs, type = "rmse")
 
 ## compute skill score using veriApply
-veriApply("EnsRmsess", fcst=tm$fcst, obs=tm$obs, fcst.ref=tm$fcst + 2)
-
+veriApply("EnsRmsess", fcst = tm$fcst, obs = tm$obs, fcst.ref = tm$fcst + 2)
 
 }
 \seealso{

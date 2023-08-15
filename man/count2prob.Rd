@@ -15,16 +15,16 @@ count2prob(x, type = 3)
 Matrix of probabilities per category
 }
 \description{
-Using plotting positions as described in Wilks (2011), counts of 
+Using plotting positions as described in Wilks (2011), counts of
 occurrences per forecast category are converted to probabilities
-of occurrence. For ensembles of size 1 (e.g. verifying observations), 
-the count vector is returned unaltered (corresponding to occurrence 
+of occurrence. For ensembles of size 1 (e.g. verifying observations),
+the count vector is returned unaltered (corresponding to occurrence
 probabilities of 0 or 1).
 }
 \section{Types}{
 
 
-The types characterize the plotting positions as specified in Wilks (2011). The 
+The types characterize the plotting positions as specified in Wilks (2011). The
 plotting positions are computed using the following relationship:
 
 \deqn{p(x_i) = \frac{i + 1 - a}{n + 1 - a}}{p(x_i) = (i + 1 - a)/(n + 1 - a)}
@@ -47,13 +47,12 @@ number of ensemble members. The types are characterized as follows:
 tm <- toymodel()
 
 ## convert to tercile forecasts (only display first forecast and obs)
-count2prob(convert2prob(tm$fcst, prob=1:2/3))[1,]
-count2prob(convert2prob(tm$obs, prob=1:2/3))[1,]
-
+count2prob(convert2prob(tm$fcst, prob = 1:2 / 3))[1, ]
+count2prob(convert2prob(tm$obs, prob = 1:2 / 3))[1, ]
 
 }
 \references{
-Wilks, D.S. (2011). Statistical methods in the atmospheric sciences (Third Edition). 
+Wilks, D.S. (2011). Statistical methods in the atmospheric sciences (Third Edition).
 Academic press.
 }
 \seealso{

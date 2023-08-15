@@ -2,14 +2,14 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 rankCpp <- function(x) {
-    .Call('easyVerification_rankCpp', PACKAGE = 'easyVerification', x)
+    .Call(`_easyVerification_rankCpp`, x)
 }
 
 EnsRocaCpp <- function(ens, obs) {
-    .Call('easyVerification_EnsRocaCpp', PACKAGE = 'easyVerification', ens, obs)
+    .Call(`_easyVerification_EnsRocaCpp`, ens, obs)
 }
 
 rankEnsCpp <- function(ens) {
-    .Call('easyVerification_rankEnsCpp', PACKAGE = 'easyVerification', ens)
+    .Call(`_easyVerification_rankEnsCpp`, ens)
 }
 

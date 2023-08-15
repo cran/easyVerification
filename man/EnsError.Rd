@@ -33,11 +33,11 @@ the mean squared error, and \code{EnsRmse} the square root of the mean
 squared error (for consistency with the veri package).
 }
 \examples{
-#forecast and observations
+# forecast and observations
 tm <- toymodel()
 
 # compute the mean bias
-EnsError(tm$fcst, tm$obs, type='me')
+EnsError(tm$fcst, tm$obs, type = "me")
 # equivalently
 EnsMe(tm$fcst, tm$obs)
 

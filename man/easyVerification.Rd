@@ -3,7 +3,6 @@
 \docType{package}
 \name{easyVerification}
 \alias{easyVerification}
-\alias{easyVerification-package}
 \title{Ensemble Forecast Verification for Large Data Sets}
 \description{
 Set of tools to simplify application of atomic forecast

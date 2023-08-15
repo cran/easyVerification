@@ -5,9 +5,14 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // rankCpp
 NumericVector rankCpp(NumericVector x);
-RcppExport SEXP easyVerification_rankCpp(SEXP xSEXP) {
+RcppExport SEXP _easyVerification_rankCpp(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -18,7 +23,7 @@ END_RCPP
 }
 // EnsRocaCpp
 NumericVector EnsRocaCpp(NumericMatrix ens, NumericMatrix obs);
-RcppExport SEXP easyVerification_EnsRocaCpp(SEXP ensSEXP, SEXP obsSEXP) {
+RcppExport SEXP _easyVerification_EnsRocaCpp(SEXP ensSEXP, SEXP obsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -30,7 +35,7 @@ END_RCPP
 }
 // rankEnsCpp
 NumericVector rankEnsCpp(NumericMatrix ens);
-RcppExport SEXP easyVerification_rankEnsCpp(SEXP ensSEXP) {
+RcppExport SEXP _easyVerification_rankEnsCpp(SEXP ensSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -38,4 +43,16 @@ BEGIN_RCPP
     rcpp_result_gen = Rcpp::wrap(rankEnsCpp(ens));
     return rcpp_result_gen;
 END_RCPP
+}
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_easyVerification_rankCpp", (DL_FUNC) &_easyVerification_rankCpp, 1},
+    {"_easyVerification_EnsRocaCpp", (DL_FUNC) &_easyVerification_EnsRocaCpp, 2},
+    {"_easyVerification_rankEnsCpp", (DL_FUNC) &_easyVerification_rankEnsCpp, 1},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_easyVerification(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }

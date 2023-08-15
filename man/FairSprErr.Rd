@@ -19,8 +19,8 @@ overconfidence in the forecasts.
 }
 \details{
 Here we define the spread-error rate as the square root of the ratio
-  of mean ensemble variance to the mean squared error of the ensemble mean 
-  with the verifying observations. We inflate the intra ensemble sample 
+  of mean ensemble variance to the mean squared error of the ensemble mean
+  with the verifying observations. We inflate the intra ensemble sample
   variance to account for the finite ensemble size as in Weigel (2011).
 }
 \examples{
@@ -28,10 +28,10 @@ tm <- toymodel()
 FairSprErr(tm$fcst, tm$obs)
 
 ## compute spread to error ratio using veriApply
-veriApply('FairSprErr', fcst=tm$fcst, obs=tm$obs)
+veriApply("FairSprErr", fcst = tm$fcst, obs = tm$obs)
 
 ## compare with 'unfair' spread to error ratio
-veriApply("EnsSprErr", fcst=tm$fcst, obs=tm$obs)
+veriApply("EnsSprErr", fcst = tm$fcst, obs = tm$obs)
 
 }
 \references{

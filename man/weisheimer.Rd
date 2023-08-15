@@ -4,28 +4,34 @@
 \alias{weisheimer}
 \title{Compute Reliability Categories as in Weisheimer et al. (2014)}
 \usage{
-weisheimer(ens, obs, pthresh = 2/3, nboot = 100, brier.thresholds = seq(0,
-  1, 0.2), ...)
+weisheimer(
+  ens,
+  obs,
+  pthresh = 2/3,
+  nboot = 100,
+  brier.thresholds = seq(0, 1, 0.2),
+  ...
+)
 }
 \arguments{
 \item{ens}{n x k matrix of n forecasts from k ensemble members}
 
 \item{obs}{n verifying observations}
 
-\item{pthresh}{probability threshold to convert to category forecasts. 
+\item{pthresh}{probability threshold to convert to category forecasts.
 If negative, event falling below threshold is used, else, event
 above threshold is used.}
 
 \item{nboot}{number of bootstrap replicates to estimate 75 percent
 confidence interval}
 
-\item{brier.thresholds}{Thresholds used to bin the forecasts (see 
+\item{brier.thresholds}{Thresholds used to bin the forecasts (see
 \code{\link[verification]{brier}})}
 
 \item{...}{additional arguments for compatibility with other scores}
 }
 \description{
-This function implements the reliability categorization for forecasts of binary 
+This function implements the reliability categorisation for forecasts of binary
 events as documented in Weisheimer et al. (2014). It has only been implemented for
 category forecasts with categories defined relative to the forecast and observed
 climatological distribution (i.e. without systematic bias).

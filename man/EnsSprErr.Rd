@@ -26,7 +26,7 @@ tm <- toymodel()
 EnsSprErr(tm$fcst, tm$obs)
 
 ## compute spread to error ratio using veriApply
-veriApply('EnsSprErr', fcst=tm$fcst, obs=tm$obs)
+veriApply("EnsSprErr", fcst = tm$fcst, obs = tm$obs)
 
 }
 \seealso{
